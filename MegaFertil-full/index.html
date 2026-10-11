@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#0e7466"><meta name="format-detection" content="telephone=no">
+<meta name="description" content="Bepul test: turmush tarzi indeksi, AI-maslahatchi va buyurtma."><meta property="og:type" content="website"><meta property="og:title" content="MegaFertil: bepul 2 daqiqalik test"><meta property="og:description" content="15 savol, darhol natija. Bu tashxis emas."><meta name="twitter:card" content="summary">
+<title>MegaFertil Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: bitta ustunli ish maydoni (max 1080px); tepada demo-panel, ichkarida sayt / admin ko'rinishlari */
+:root{
+  --bg:#f4f7f6; --surface:#ffffff; --surface-2:#eaf1f0; --fg:#12262a; --muted:#566d71; --line:#d6e1df;
+  --accent:#0e7466; --accent-fg:#ffffff; --accent-soft:#d9efeb; --sand:#f1e8d8; --sand-fg:#5b4a2a;
+  --b-high:#1a7f4b; --b-medium:#1f7aa6; --b-attention:#b45309; --b-consult:#b42318;
+  --soft-high:#dcf3e5; --soft-medium:#dbeef8; --soft-attention:#fbebd3; --soft-consult:#fbdfdb;
+  --shadow:0 1px 2px rgba(18,38,42,.06),0 6px 20px rgba(18,38,42,.05);
+  --f-display:"Bricolage Grotesque","Onest",system-ui,sans-serif; --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1b1d; --surface:#142629; --surface-2:#1b3135; --fg:#e6f0ee; --muted:#9bb3b0; --line:#2a4448;
+  --accent:#3fc2ae; --accent-fg:#07201c; --accent-soft:#17403b; --sand:#2e2a1f; --sand-fg:#e8dcc0;
+  --b-high:#4cc58a; --b-medium:#5fb6e0; --b-attention:#f0a042; --b-consult:#f2766b;
+  --soft-high:#143a28; --soft-medium:#123448; --soft-attention:#42300f; --soft-consult:#45201c;
+  --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1b1d; --surface:#142629; --surface-2:#1b3135; --fg:#e6f0ee; --muted:#9bb3b0; --line:#2a4448;
+  --accent:#3fc2ae; --accent-fg:#07201c; --accent-soft:#17403b; --sand:#2e2a1f; --sand-fg:#e8dcc0;
+  --b-high:#4cc58a; --b-medium:#5fb6e0; --b-attention:#f0a042; --b-consult:#f2766b;
+  --soft-high:#143a28; --soft-medium:#123448; --soft-attention:#42300f; --soft-consult:#45201c;
+  --shadow:none; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;padding-left:16px;padding-right:16px;padding-top:0;padding-bottom:32px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,5vw,2.9rem);font-weight:700}
+h2{font-size:clamp(1.35rem,3vw,1.75rem);font-weight:700}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+.wrap{max-width:1080px;margin-left:auto;margin-right:auto}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-left:-16px;margin-right:-16px;padding:10px 16px}
+.top-in{max-width:1080px;margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.2rem;display:flex;align-items:center;gap:8px}
+.brand i{font-style:normal;font-size:.7rem;font-family:var(--f-body);font-weight:600;letter-spacing:.08em;background:var(--sand);color:var(--sand-fg);padding:2px 7px;border-radius:4px}
+.nav{display:flex;gap:4px;overflow-x:auto;min-width:0;flex:1}
+.nav button{white-space:nowrap}
+.tab{border:0;background:transparent;color:var(--muted);font:inherit;font-weight:500;padding:8px 12px;border-radius:8px;cursor:pointer}
+.tab[aria-current="true"]{background:var(--accent-soft);color:var(--fg)}
+.tab:hover{color:var(--fg)}
+.demo{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted);padding-top:10px;padding-bottom:10px}
+.demo select{font:inherit;font-size:.85rem}
+.btn{font:inherit;font-weight:600;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 18px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.btn:hover{border-color:var(--accent)}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-sm{min-height:34px;padding:6px 12px;font-size:.88rem;border-radius:8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+.eyebrow{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;padding-top:36px;padding-bottom:24px;align-items:start}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:24px;padding-bottom:16px}}
+.lead{font-size:1.1rem;color:var(--muted);max-width:56ch}
+.sc{display:flex;flex-direction:column;gap:4px;text-align:left;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:inherit;min-height:84px}
+.sc:hover{border-color:var(--accent);background:var(--accent-soft)}
+.sc b{font-family:var(--f-display);font-size:1.15rem}
+.sc span{color:var(--muted);font-size:.875rem}
+.pill{display:inline-block;font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--surface-2);color:var(--fg);white-space:nowrap}
+.pill.high{background:var(--soft-high);color:var(--b-high)}.pill.medium{background:var(--soft-medium);color:var(--b-medium)}
+.pill.attention{background:var(--soft-attention);color:var(--b-attention)}.pill.consult{background:var(--soft-consult);color:var(--b-consult)}
+.pill.sample{background:var(--sand);color:var(--sand-fg)}
+.notice{border-radius:12px;padding:14px 16px;font-size:.92rem;background:var(--sand);color:var(--sand-fg)}
+.notice.crit{background:var(--soft-consult);color:var(--fg);border:1px solid var(--b-consult)}
+.notice.ok{background:var(--soft-high);color:var(--fg)}
+.progress{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.progress>div{height:100%;background:var(--accent);transition:width .25s}
+.quiz{max-width:680px;margin-left:auto;margin-right:auto;padding-top:24px;padding-bottom:24px;display:flex;flex-direction:column;gap:20px}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{font:inherit;text-align:left;padding:15px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:54px}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.gauge{width:170px;height:170px;flex:none}
+.g-num{font-family:var(--f-display);font-size:38px;font-weight:700;fill:var(--fg)}
+.g-sub{font-size:12px;fill:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(0,150px) 1fr 34px;gap:10px;align-items:center;font-size:.9rem}
+@media(max-width:520px){.bar{grid-template-columns:1fr 34px}.bar .lbl{grid-column:1/-1}}
+.bar .track{height:10px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar .track>div{height:100%;border-radius:99px;background:var(--accent)}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.92rem}
+input[type=text],input[type=tel],input[type=number],select,textarea{font:inherit;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:44px;width:100%}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.err{color:var(--b-consult);font-size:.84rem;font-weight:500;min-height:1.1em}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;font-weight:400}
+.chk input{margin-top:4px;width:18px;height:18px;flex:none;accent-color:var(--accent)}
+.packs{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+.pack{display:flex;flex-direction:column;gap:2px;padding:14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.pack:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.pack.on{border-color:var(--accent);background:var(--accent-soft)}
+.pack input{position:absolute;opacity:0;pointer-events:none}
+.pack:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.sum{display:flex;justify-content:space-between;gap:12px;padding-top:4px;padding-bottom:4px;font-variant-numeric:tabular-nums}
+.sum.total{font-weight:700;font-size:1.1rem;border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+.chat{display:flex;flex-direction:column;gap:10px;height:min(52vh,460px);overflow-y:auto;padding:4px 2px}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:.95rem;white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--accent);color:var(--accent-fg);border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--surface-2);border-bottom-left-radius:4px}
+.msg.agent{align-self:flex-start;background:var(--soft-medium);border-bottom-left-radius:4px}
+.msg.sys{align-self:center;background:var(--sand);color:var(--sand-fg);font-size:.82rem;text-align:center}
+.src{display:block;font-size:.76rem;color:var(--muted);margin-top:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:.85rem;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.chip:hover{border-color:var(--accent);background:var(--accent-soft)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.pick td{background:var(--accent-soft)}
+td select{min-height:34px;padding:4px 8px;font-size:.85rem;width:auto}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.kpi{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.kpi b{display:block;font-family:var(--f-display);font-size:1.5rem;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.8rem;color:var(--muted)}
+.fun{display:grid;grid-template-columns:minmax(0,130px) 1fr minmax(0,90px);gap:10px;align-items:center;font-size:.88rem}
+@media(max-width:520px){.fun{grid-template-columns:90px 1fr 70px}}
+.fun .track{height:22px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.fun .track>div{height:100%;background:var(--accent);border-radius:6px}
+.stickycta{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);z-index:15;display:none}
+@media(max-width:700px){.stickycta.on{display:block}body.has-sticky{padding-bottom:84px}}
+.trace{font-size:.82rem;display:flex;flex-direction:column;gap:6px}
+.trace code{background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:.8rem;word-break:break-word}
+ol.steps{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:8px}
+code,.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.copy{background:var(--surface-2);border-radius:8px;padding:8px 10px;font-size:.85rem;word-break:break-all;display:block}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+html{-webkit-text-size-adjust:100%}body{margin:0}[hidden]{display:none!important}img{max-width:100%}
+</style>
+</head><body>
+<div id="app"></div>
+<form name="leads" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden><input type="hidden" name="form-name" value="leads"><input name="bot-field"><input name="kind"><input name="name"><input name="phone"><input name="time"><input name="scenario"><input name="index"><input name="band"><input name="flags"><input name="grade"><input name="order_id"><input name="qty"><input name="total"><input name="pay"><input name="region"><input name="district"><input name="address"><input name="promo"><input name="source"><input name="utm_source"><input name="utm_medium"><input name="utm_campaign"><input name="utm_content"><input name="first_source"><input name="consent"><input name="marketing"></form>
+<script>
+/* ===== LOGIC (toza funksiyalar, DOM'siz; Node'da sinab ko'riladi) ===== */
+const DOMAINS = ["lifestyle", "nutrition", "stress_sleep", "spec", "history"];
+const DOMAIN_LABEL = { lifestyle: "Turmush tarzi", nutrition: "Ovqatlanish", stress_sleep: "Uyqu va stress", spec: "Siklga / erkak omiliga oid", history: "Anamnez va ko'riklar" };
+const W = { lifestyle: 0.25, nutrition: 0.15, stress_sleep: 0.2, spec: 0.25, history: 0.15 };
+
+const o = (id, t, p, flag) => ({ id, t, p: p || {}, flag: flag || null });
+
+const QS = {
+  Q1: { code: "Q1", t: "Test kim uchun?", opts: [o("m", "Men — erkak"), o("f", "Men — ayol"), o("c", "Biz — juftlik")] },
+  Q2: { code: "Q2", t: "Yoshingiz qaysi oraliqda? (juftlikda: kattangiz)", opts: [o("a", "18–24"), o("b", "25–29"), o("c", "30–34", { history: 1 }), o("d", "35–39", { history: 2 }), o("e", "40 va undan katta", { history: 3 })] },
+  Q3: { code: "Q3", t: "Farzand rejalashtirganingizga qancha vaqt bo'ldi?", opts: [o("a", "Hali boshlamadik"), o("b", "6 oydan kam", {}), o("c", "6–12 oy", { history: 1 }), o("d", "12 oydan ko'p", { history: 2 })] },
+  Q4: { code: "Q4", t: "Chekish va alkogol iste'moli", opts: [o("a", "Umuman yo'q"), o("b", "Ba'zan", { lifestyle: 1 }), o("c", "Muntazam", { lifestyle: 3 })] },
+  Q5: { code: "Q5", t: "Haftasiga necha marta jismoniy faollik qilasiz?", opts: [o("a", "Deyarli yo'q", { lifestyle: 3 }), o("b", "1–2 marta", { lifestyle: 2 }), o("c", "3–4 marta"), o("d", "5 va undan ko'p")] },
+  Q6: { code: "Q6", t: "Ovqatlanish tartibingiz qanday?", opts: [o("a", "Sabzavot, meva va oqsil muvozanatli"), o("b", "Ba'zan muvozanat buziladi", { nutrition: 1 }), o("c", "Ko'pincha tez ovqat va shirinlik", { nutrition: 3 })] },
+  Q7: { code: "Q7", t: "Uyqu va stress holatingiz", opts: [o("a", "7–8 soat uxlayman, stress past"), o("b", "Uyqu yetarli, stress o'rtacha", { stress_sleep: 1 }), o("c", "6 soatdan kam yoki stress yuqori", { stress_sleep: 2 }), o("d", "Uyqu buzilgan va stress doimiy", { stress_sleep: 3 })] },
+  A1: { code: "A1", t: "Hayz sikli muntazammi? (ayol uchun)", opts: [o("a", "Muntazam"), o("b", "Ba'zan buziladi", { spec: 1 }), o("c", "Juda tartibsiz yoki yo'q", { spec: 3 }, "CYCLE_IRREG")] },
+  A2: { code: "A2", t: "Hayz davridagi og'riq darajasi (ayol uchun)", opts: [o("a", "Yo'q"), o("b", "Yengil", { spec: 1 }), o("c", "Kuchli, kundalik ishga xalaqit beradi", { spec: 2 }, "PAIN_SEVERE")] },
+  A3: { code: "A3", t: "Shifokor sizga ginekologik holat borligini aytganmi?", opts: [o("n", "Yo'q"), o("u", "Bilmayman / eslolmayman", { history: 1 }), o("y", "Ha", { history: 3 }, "MED_HISTORY")] },
+  A4: { code: "A4", t: "Oxirgi yilda vazningiz o'zgarganmi?", opts: [o("a", "Barqaror"), o("b", "3–5 kg o'zgardi", { lifestyle: 1 }), o("c", "5 kg dan ko'p o'zgardi", { lifestyle: 2 })] },
+  A5: { code: "A5", t: "Gormonal kontratseptivlar qabul qilganmisiz?", opts: [o("a", "Hech qachon"), o("b", "Ha, 6 oydan oldin to'xtatganman"), o("c", "Ha, yaqinda to'xtatdim", { history: 1 })] },
+  A6: { code: "A6", t: "Oxirgi 12 oyda ginekolog ko'rigidan o'tdingizmi?", opts: [o("y", "Ha"), o("n", "Yo'q", { history: 1 })] },
+  E1: { code: "E1", t: "Issiqlik ta'siri: uzoq o'tirish, sauna/hammom, issiq ish muhiti (erkak uchun)", opts: [o("a", "Deyarli yo'q"), o("b", "Ba'zan", { spec: 1 }), o("c", "Muntazam", { spec: 3 })] },
+  E2: { code: "E2", t: "Kasbingizda zararli omillar bormi? (kimyoviy, tebranish, uzoq haydash)", opts: [o("a", "Yo'q"), o("b", "Bitta omil", { spec: 1 }), o("c", "Bir nechta omil", { spec: 2 })] },
+  E3: { code: "E3", t: "Shifokor sizga urologik yoki androlog holat borligini aytganmi?", opts: [o("n", "Yo'q"), o("u", "Bilmayman / eslolmayman", { history: 1 }), o("y", "Ha", { history: 3 }, "MED_HISTORY")] },
+  E4: { code: "E4", t: "Vazn guruhingiz (tana massa indeksi bo'yicha, taxminan)", opts: [o("a", "Me'yorda"), o("b", "Biroz ortiqcha", { lifestyle: 1 }), o("c", "Sezilarli ortiqcha", { lifestyle: 2 })] },
+  E5: { code: "E5", t: "Surunkali kasallik yoki muntazam dori qabul qilasizmi?", opts: [o("n", "Yo'q"), o("y", "Ha", { history: 3 }, "MED_HISTORY")] },
+  E6: { code: "E6", t: "Oxirgi 12 oyda urolog ko'rigi yoki spermogramma bo'lganmi?", opts: [o("y", "Ha"), o("n", "Yo'q", { history: 1 })] },
+  Q14: { code: "Q14", t: "Hozir vitamin yoki qo'shimcha qabul qilasizmi?", opts: [o("a", "Yo'q"), o("b", "Ha, shifokor bilan kelishganman"), o("c", "Ha, o'zim tanlaganman", { lifestyle: 1 })] },
+  Q15: { code: "Q15", t: "Tavsiyani qaysi kanalda olishni xohlaysiz?", opts: [o("tg", "Telegram"), o("ph", "Telefon"), o("web", "Faqat saytda")] },
+};
+
+const COMMON = ["Q2", "Q3", "Q4", "Q5", "Q6", "Q7"];
+const FLOW = {
+  m: ["Q1", ...COMMON, "E1", "E2", "E3", "E4", "E5", "E6", "Q14", "Q15"],
+  f: ["Q1", ...COMMON, "A1", "A2", "A3", "A4", "A5", "A6", "Q14", "Q15"],
+  c: ["Q1", ...COMMON, "A1", "A3", "A6", "E1", "E3", "E6", "Q14", "Q15"],
+};
+const PART_CODES = {
+  m: { "Erkak": [...COMMON, "E1", "E2", "E3", "E4", "E5", "E6", "Q14"] },
+  f: { "Ayol": [...COMMON, "A1", "A2", "A3", "A4", "A5", "A6", "Q14"] },
+  c: { "Ayol": [...COMMON, "A1", "A3", "A6", "Q14"], "Erkak": [...COMMON, "E1", "E3", "E6", "Q14"] },
+};
+
+function domainScores(codes, answers) {
+  const out = {};
+  for (const d of DOMAINS) {
+    let sum = 0, max = 0;
+    for (const c of codes) {
+      const q = QS[c];
+      max += Math.max(0, ...q.opts.map((x) => x.p[d] || 0));
+      const op = q.opts.find((x) => x.id === answers[c]);
+      if (op) sum += op.p[d] || 0;
+    }
+    out[d] = max ? Math.round(100 * (1 - Math.min(sum / max, 1))) : null;
+  }
+  return out;
+}
+function indexOf(ds) {
+  let tw = 0, s = 0;
+  for (const d of DOMAINS) { if (ds[d] == null) continue; tw += W[d]; s += W[d] * ds[d]; }
+  return tw ? Math.round(s / tw) : 0;
+}
+function bandOf(i) { return i >= 80 ? "high" : i >= 60 ? "medium" : i >= 40 ? "attention" : "consult"; }
+const BAND_LABEL = { high: "Qulay", medium: "O'rtacha", attention: "E'tibor kerak", consult: "Mutaxassis ko'rigi tavsiya etiladi" };
+const FLAG_LABEL = {
+  MED_HISTORY: "Shifokor aytgan holat yoki surunkali kasallik/dori",
+  CYCLE_IRREG: "Hayz sikli juda tartibsiz yoki yo'q",
+  PAIN_SEVERE: "Hayz davrida kuchli og'riq",
+  TRY_12M: "Farzand ko'rishga 12 oydan ortiq urinish",
+  TRY_6M_35: "35 yoshdan oshgan va 6 oydan ortiq urinish",
+  AGE40_TRY6: "40 yosh va undan katta, 6 oydan ortiq urinish",
+};
+function redFlags(codes, a) {
+  const f = [];
+  const has = (c) => codes.includes(c);
+  if ((has("A3") && a.A3 === "y") || (has("E3") && a.E3 === "y") || (has("E5") && a.E5 === "y")) f.push("MED_HISTORY");
+  if (has("A1") && a.A1 === "c") f.push("CYCLE_IRREG");
+  if (has("A2") && a.A2 === "c") f.push("PAIN_SEVERE");
+  const older = a.Q2 === "d" || a.Q2 === "e";
+  if (a.Q3 === "d") f.push("TRY_12M");
+  else if (older && a.Q3 === "c") f.push("TRY_6M_35");
+  if (a.Q2 === "e" && (a.Q3 === "c" || a.Q3 === "d")) f.push("AGE40_TRY6");
+  return f;
+}
+function flowCodes(sc) { return FLOW[sc] || []; }
+function isComplete(sc, answers) { return flowCodes(sc).length === 15 && flowCodes(sc).every((c) => answers[c]); }
+function computeResult(sc, answers) {
+  const codes = flowCodes(sc);
+  const a = {};
+  for (const c of codes) if (answers[c]) a[c] = answers[c];
+  const parts = Object.entries(PART_CODES[sc]).map(([label, cs]) => {
+    const domains = domainScores(cs, a);
+    return { label, domains, idx: indexOf(domains) };
+  });
+  let index;
+  if (parts.length === 2) {
+    const mn = Math.min(parts[0].idx, parts[1].idx);
+    index = Math.round(Math.min((parts[0].idx + parts[1].idx) / 2, mn + 15));
+  } else index = parts[0].idx;
+  const flags = redFlags(codes, a);
+  // eng zaif domenlar (barcha qismlar bo'yicha o'rtacha)
+  const avg = {};
+  for (const d of DOMAINS) {
+    const v = parts.map((p) => p.domains[d]).filter((x) => x != null);
+    avg[d] = v.length ? Math.round(v.reduce((s, x) => s + x, 0) / v.length) : null;
+  }
+  const weak = DOMAINS.filter((d) => avg[d] != null).sort((x, y) => avg[x] - avg[y]).slice(0, 3);
+  return { scenario: sc, index, band: bandOf(index), parts, flags, weak, avg, channel: a.Q15 || "web" };
+}
+const TIPS = {
+  lifestyle: "Chekish, alkogol va harakat odatlarini ko'rib chiqing: haftasiga 3–4 marta o'rtacha yuklama ko'pchilik uchun qulay boshlang'ich nuqta.",
+  nutrition: "Ovqatlanishda sabzavot, meva va oqsil muvozanatiga e'tibor bering, tez ovqat va shirinlik chastotasini kamaytiring.",
+  stress_sleep: "Uyquni muntazam va yetarli qiling; kundalik stressni kamaytiradigan odat (piyoda yurish, nafas mashqi) qo'shing.",
+  spec: "Sikl yoki erkak salomatligi bilan bog'liq belgilar bo'lsa, ularni ginekolog yoki urolog bilan muhokama qiling.",
+  history: "Oxirgi 12 oyda ko'rikdan o'tmagan bo'lsangiz, tegishli shifokor ko'rigiga yoziling.",
+};
+function leadGrade(res, hasPhone) {
+  if (!hasPhone) return "C";
+  if (res.flags.length) return "A";
+  return res.index >= 40 && res.index < 80 ? "A" : "B";
+}
+
+/* ---- telefon, manzil, buyurtma ---- */
+function digits(s) { return String(s || "").replace(/\D/g, ""); }
+function phoneLocal(s) { let d = digits(s); if (d.startsWith("998")) d = d.slice(3); return d.slice(0, 9); }
+function fmtPhone(s) {
+  const d = phoneLocal(s);
+  let r = "+998";
+  if (d.length) r += " (" + d.slice(0, 2);
+  if (d.length >= 2) r += ")";
+  if (d.length > 2) r += " " + d.slice(2, 5);
+  if (d.length > 5) r += "-" + d.slice(5, 7);
+  if (d.length > 7) r += "-" + d.slice(7, 9);
+  return r;
+}
+function validPhone(s) { return phoneLocal(s).length === 9; }
+const fmtSum = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+const FEE = { A: 20000, B: 30000, C: 40000 };
+const FREE_FROM = 500000;
+function calcOrder(price, qty, promo, zone) {
+  const sub = price * qty;
+  const pr = String(promo || "").trim().toUpperCase();
+  const disc = pr === "TEST10" ? Math.round(sub * 0.1) : 0;
+  const after = sub - disc;
+  const fee = after >= FREE_FROM ? 0 : FEE[zone] || FEE.C;
+  return { sub, disc, fee, total: after + fee, promoOk: pr === "" ? null : disc > 0 };
+}
+const REGIONS = [
+  { id: "tsh", n: "Toshkent shahri", z: "A", d: ["Chilonzor", "Yunusobod", "Mirzo Ulug'bek", "Yakkasaroy", "Shayxontohur", "Sergeli", "Olmazor"] },
+  { id: "tv", n: "Toshkent viloyati", z: "A", d: ["Chirchiq", "Angren", "Olmaliq", "Zangiota", "Qibray", "Nurafshon"] },
+  { id: "sam", n: "Samarqand viloyati", z: "B", d: ["Samarqand shahri", "Kattaqo'rg'on", "Urgut", "Bulung'ur"] },
+  { id: "bux", n: "Buxoro viloyati", z: "B", d: ["Buxoro shahri", "G'ijduvon", "Kogon", "Vobkent"] },
+  { id: "far", n: "Farg'ona viloyati", z: "B", d: ["Farg'ona shahri", "Marg'ilon", "Qo'qon", "Quvasoy"] },
+  { id: "and", n: "Andijon viloyati", z: "B", d: ["Andijon shahri", "Asaka", "Xonobod", "Shahrixon"] },
+  { id: "nam", n: "Namangan viloyati", z: "B", d: ["Namangan shahri", "Chust", "Pop", "Uychi"] },
+  { id: "xor", n: "Xorazm viloyati", z: "C", d: ["Urganch", "Xiva", "Shovot", "Xonqa"] },
+  { id: "qq", n: "Qoraqalpog'iston Respublikasi", z: "C", d: ["Nukus", "Mo'ynoq", "Qo'ng'irot", "Beruniy"] },
+  { id: "qas", n: "Qashqadaryo viloyati", z: "C", d: ["Qarshi", "Shahrisabz", "Kitob", "Muborak"] },
+  { id: "sur", n: "Surxondaryo viloyati", z: "C", d: ["Termiz", "Denov", "Sho'rchi", "Boysun"] },
+  { id: "nav", n: "Navoiy viloyati", z: "C", d: ["Navoiy shahri", "Zarafshon", "Uchquduq", "Karmana"] },
+  { id: "jiz", n: "Jizzax viloyati", z: "B", d: ["Jizzax shahri", "Forish", "G'allaorol", "Zomin"] },
+  { id: "sir", n: "Sirdaryo viloyati", z: "B", d: ["Guliston", "Yangiyer", "Shirin", "Sardoba"] },
+];
+function validateOrder(f) {
+  const e = {};
+  if (String(f.name || "").trim().length < 2) e.name = "Ismingizni kiriting";
+  if (!validPhone(f.phone)) e.phone = "Telefon raqamini to'liq kiriting (9 raqam)";
+  const r = REGIONS.find((x) => x.id === f.region);
+  if (!r) e.region = "Viloyatni tanlang";
+  else if (!r.d.includes(f.district)) e.district = "Tumanni tanlang";
+  if (String(f.address || "").trim().length < 5) e.address = "Manzilni kiriting (ko'cha, uy)";
+  if (!f.adult) e.adult = "18 yoshdan oshganingizni tasdiqlang";
+  if (!f.consent) e.consent = "Ma'lumotlarni qayta ishlashga rozilik kerak";
+  return e;
+}
+
+/* ---- AI: guardrail + retrieval ---- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[ʻʼ’‘`´']/g, "").replace(/[^a-zа-яё0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+}
+const STOP = new Set(["bu", "va", "bilan", "uchun", "qanday", "qancha", "nima", "bor", "yoq", "men", "siz", "sizda", "menga", "kerak", "mumkin", "mumkinmi", "boladimi", "bormi", "emas", "ham", "yoki", "qaysi", "necha", "kim", "qayerda"]);
+function toks(s) { return norm(s).split(" ").filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.slice(0, 5)); }
+const RX = {
+  urgent: /qon ket|qonash|hushdan|nafas ol\w* qiyin|oldirmoq|oldirish|suitsid|ozimga zarar|kuchli ogriq/,
+  injection: /qoidalarni unut|ignore|system prompt|tizim prompt|ko ?rsatmalaring|jailbreak|prompt\w* (kor|ko)sat|oldingi (buyruq|korsatma)/,
+  minor: /\b1[0-7] yosh|voyaga yetmagan/,
+  human: /menejer|operator|odam bilan|qongiroq|telefon qil|boglan|aloqaga chiq|jonli|inson bilan/,
+  medical: /tashxis|diagnoz|doza|necha (marta|dona|tabletka|kapsula)|kuniga necha|homilad|emiz|kasal|davola|alomat|ogri|bepusht|retsept|antibiotik|dorini (bekor|almash)|spermogram|tahlil natij|gormon|saraton|diabet|bosim|kasallik|shifokor kerakmi|xavfsizmi/,
+};
+function classify(text) {
+  const t = norm(text);
+  if (RX.urgent.test(t)) return "urgent";
+  if (RX.injection.test(t)) return "injection";
+  if (RX.minor.test(t)) return "minor";
+  if (RX.human.test(t)) return "human";
+  if (RX.medical.test(t)) return "medical";
+  return "ok";
+}
+const FORBIDDEN = [/davolaydi/i, /davolaydigan/i, /kafolat/i, /100\s?%/, /tashxis qo['ʻ’]?yadi/i, /bepushtlikni yo['ʻ’]?q/i, /shifo topasiz/i, /homilador bo['ʻ’]?lasiz/i];
+function validateClaim(text) { return FORBIDDEN.filter((r) => r.test(text)).map((r) => r.source); }
+const TAU = 0.5;
+function retrieve(query, kb) {
+  const docs = kb.filter((c) => c.status === "published");
+  const q = toks(query);
+  if (!q.length || !docs.length) return [];
+  const sets = docs.map((c) => new Set(toks(c.title + " " + c.keywords + " " + c.text)));
+  const N = docs.length;
+  const idf = {};
+  for (const w of new Set(q)) { const df = sets.filter((s) => s.has(w)).length; idf[w] = Math.log(1 + N / (df + 0.5)); }
+  const total = Object.values(idf).reduce((s, x) => s + x, 0) || 1;
+  return docs
+    .map((c, i) => {
+      const hit = [...new Set(q)].filter((w) => sets[i].has(w));
+      const kw = new Set(toks(c.title + " " + c.keywords));
+      const bonus = hit.filter((w) => kw.has(w)).length * 0.04;
+      return { doc: c, score: Math.min(1, hit.reduce((s, w) => s + idf[w], 0) / total + bonus), hit };
+    })
+    .filter((r) => r.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+}
+function workHours(now) {
+  const h = (now.getUTCHours() + 5) % 24;
+  return h >= 9 && h < 21;
+}
+function answer(text, kb) {
+  const risk = classify(text);
+  const base = { risk, hits: [], handoff: null, text: "", sources: [] };
+  if (risk === "urgent") return { ...base, handoff: { code: "URGENT", priority: "urgent" }, text: "Bu holat shoshilinch e'tibor talab qilishi mumkin. Iltimos, hoziroq 103 ga qo'ng'iroq qiling yoki eng yaqin shifoxonaga murojaat qiling. Men menejerni ham xabardor qildim." };
+  if (risk === "injection") return { ...base, text: "Bu so'rov bo'yicha yordam bera olmayman. Mahsulot, buyurtma yoki test natijasi haqida savol bersangiz, mamnuniyat bilan javob beraman." };
+  if (risk === "minor") return { ...base, handoff: { code: "MED_Q", priority: "high" }, text: "Mahsulot 18 yoshdan oshganlar uchun. Salomatlik bo'yicha savollar uchun shifokor yoki ota-onangiz bilan maslahatlashing." };
+  if (risk === "human") return { ...base, handoff: { code: "USER_ASK", priority: "normal" }, text: "Albatta, sizni menejerga ulayman." };
+  if (risk === "medical") return { ...base, handoff: { code: "MED_Q", priority: "high" }, text: "Bu savol tibbiy xulosa yoki dozani talab qiladi, men esa shifokor emasman va tashxis qo'ya olmayman. Iltimos, shifokor bilan maslahatlashing. Xohlasangiz, menejerga ulayman. Qabul qilish tartibi uchun mahsulot yorlig'idagi yo'riqnomaga qarang." };
+  const hits = retrieve(text, kb);
+  if (!hits.length || hits[0].score < TAU) return { ...base, hits, handoff: { code: "NO_ANSWER", priority: "normal" }, text: "Bu savol bo'yicha tasdiqlangan ma'lumotim yo'q. Noto'g'ri javob bermaslik uchun menejerga ulashni taklif qilaman." };
+  const top = hits[0].doc;
+  const bad = validateClaim(top.text);
+  if (bad.length) return { ...base, hits, handoff: { code: "NO_ANSWER", priority: "normal" }, text: "Javobni tasdiqlay olmadim, menejerga ulashni taklif qilaman." };
+  return { ...base, hits, sources: [top.title], text: top.text };
+}
+
+/* ---- avtomatlashtirish ---- */
+const FLOW_A = [
+  { d: 1, t: "Natijangiz: indeks {idx} ({band}). Eng yaxshilanadigan soha: {weak}. Bugun bitta amaliy qadamni sinab ko'ring.", cta: "Hisobotni ochish" },
+  { d: 3, t: "Qisqa ta'limiy material: {weak} bo'yicha kundalik odatlar.", cta: "Mahsulot haqida bilish" },
+  { d: 7, t: "Savol-javob va yetkazish shartlari. Savolingiz bo'lsa, menejer yordam beradi.", cta: "Buyurtma berish", sales: true },
+  { d: 10, t: "Cheklangan taklif: promo-kod TEST10, 48 soat amal qiladi.", cta: "Taklifdan foydalanish", sales: true },
+];
+const FLOW_A_SAFE = { 7: "Shifokor ko'rigiga tayyorlanish: savollar ro'yxati (ta'limiy material).", 10: "Shifokor bilan suhbatdan keyin savollaringiz bo'lsa, menejer yordam beradi." };
+const FLOW_B = [
+  { d: 1, t: "Mahsulot yetib keldimi? Qabul qilish tartibi uchun yorliqdagi yo'riqnomaga qarang. Savol bo'lsa, shu yerda yozing.", cta: "AI ga savol" },
+  { d: 3, t: "Kurs boshlandimi? Bir tugma bilan javob bering.", cta: "Boshladim / Hali yo'q" },
+  { d: 7, t: "Qisqa so'rovnoma (1–5 baho). Nojo'ya ta'sir sezgan bo'lsangiz, shu yerda xabar bering.", cta: "Baho berish" },
+  { d: 10, t: "Qayta test: indeksingizni solishtiring (bu tibbiy natija emas, turmush tarzi dinamikasi).", cta: "Testni qayta o'tish" },
+];
+function fmtMsg(t, ctx) {
+  return t.replace("{idx}", ctx.idx).replace("{band}", BAND_LABEL[ctx.band] || "").replace(/\{weak\}/g, ctx.weak);
+}
+function schedule(kind, anchor, ctx) {
+  const steps = kind === "A" ? FLOW_A : FLOW_B;
+  return steps.map((s) => {
+    const when = new Date(anchor.getTime() + s.d * 86400000);
+    when.setUTCHours(5, 0, 0, 0); // 10:00 Toshkent vaqti
+    let text = fmtMsg(s.t, ctx);
+    let status = "rejalangan";
+    if (kind === "A" && ctx.bought) status = "to'xtatilgan (xarid qilingan)";
+    else if (kind === "A" && ctx.flagged && s.sales) text = FLOW_A_SAFE[s.d];
+    if (ctx.optout) status = "to'xtatilgan (rozilik yo'q)";
+    return { d: s.d, when, text, cta: s.cta, channel: ctx.tg ? "Telegram" : "SMS", status };
+  });
+}
+/* ===== LOGIC END ===== */
+/* ===== SEED KB (namuna matnlar: haqiqiy tasdiqlangan matnlar bilan almashtiriladi) ===== */
+const SEED_KB = [
+  { id: "kb1", title: "Mahsulot haqida", type: "product_fact", status: "published", keywords: "multikomplex megafertil preparat nima mahsulot qo'shimcha",
+    text: "MegaFertil Multikomplex — vitamin va minerallar majmuasi sifatida pozitsiyalanadigan qo'shimcha. U dori emas va kasallikni davolash uchun mo'ljallanmagan. Aniq tarkib va yorliq ma'lumoti qadoqdagi tasdiqlangan matn bo'yicha beriladi (namuna matn)." },
+  { id: "kb2", title: "Bu dori emasmi?", type: "policy", status: "published", keywords: "dori emas bilan farqi retsept shifokor tavsiya",
+    text: "Mahsulot dori vositasi sifatida taqdim etilmaydi va shifokor tayinlovi o'rnini bosmaydi. Doimiy dori qabul qilsangiz yoki sog'liq bo'yicha savolingiz bo'lsa, avval shifokor bilan maslahatlashing." },
+  { id: "kb3", title: "Narx va paketlar", type: "faq", status: "published", keywords: "narx narxi qancha pul turadi paket qadoq chegirma promo-kod aksiya",
+    text: "Demo narxlar: 1 qadoq — 190 000, 2 qadoq — 340 000, 3 qadoq — 480 000 so'm. TEST10 promo-kodi 10% chegirma beradi. 500 000 so'mdan yuqori buyurtmada yetkazish bepul. Joriy narxlar buyurtma sahifasida ko'rinadi." },
+  { id: "kb4", title: "To'lov usullari", type: "faq", status: "published", keywords: "tolov to'lov usullari payme click uzum naqd karta pul to'lash tolash tolasam to'lasam",
+    text: "To'lov usullari: Payme, Click, Uzum yoki yetkazib berishda naqd to'lov. Karta ma'lumotlari saytda saqlanmaydi, to'lov provayderning o'z sahifasida amalga oshiriladi." },
+  { id: "kb5", title: "Yetkazib berish muddati va hududlar", type: "faq", status: "published", keywords: "yetkazib berish dostavka kuryer muddat necha kun viloyat tuman qachon keladi",
+    text: "Yetkazib berish butun O'zbekiston bo'yicha viloyat va tuman tanlab rasmiylashtiriladi. Toshkent va viloyatida odatda 1–2 kun, boshqa hududlarda 2–5 kun (demo muddatlar). Buyurtma raqami bo'yicha holatni kuzatish mumkin." },
+  { id: "kb6", title: "Qaytarish va almashtirish", type: "policy", status: "published", keywords: "qaytarish almashtirish pulni qaytarish rad etish buzilgan yaroqsiz",
+    text: "Qadoq ochilmagan va yaroqlilik muddati o'tmagan mahsulotni qabul qilingan kundan boshlab 7 kun ichida qaytarish mumkin (namuna shart). Sifat bo'yicha shikoyat menejer orqali ko'rib chiqiladi." },
+  { id: "kb7", title: "Qabul qilish tartibi", type: "usage", status: "published", keywords: "qabul qilish tartibi ichish foydalanish qollash yoriq yoriqnoma kurs davomiyligi",
+    text: "Qabul qilish tartibi va kurs davomiyligi faqat qadoqdagi yo'riqnomada ko'rsatilgan matn bo'yicha beriladi. Dozani o'zgartirmang. Savolingiz bo'lsa, shifokor yoki menejer bilan bog'laning (namuna matn)." },
+  { id: "kb8", title: "Saqlash sharoiti", type: "usage", status: "published", keywords: "saqlash saqlanadi sharoit harorat yaroqlilik muddati",
+    text: "Mahsulotni qadoqdagi ko'rsatmaga muvofiq quruq, bolalar qo'li yetmaydigan joyda saqlang. Yaroqlilik muddati qadoqda ko'rsatilgan (namuna matn)." },
+  { id: "kb9", title: "Test natijasi nimani anglatadi?", type: "education", status: "published", keywords: "test indeks natija ball nimani anglatadi reproduktiv salomatlik hisoblanadi",
+    text: "Test 15 ta savol asosida turmush tarzi va xavf omillari bo'yicha 0–100 indeksini hisoblaydi. Bu tashxis emas va tibbiy xulosa o'rnini bosmaydi; natija faqat e'tibor beriladigan sohalarni ko'rsatadi." },
+  { id: "kb10", title: "Ish vaqti va aloqa", type: "faq", status: "published", keywords: "ish vaqti menejer aloqa telefon soat qachon ishlaysiz",
+    text: "Menejerlar har kuni 09:00–21:00 (Toshkent vaqti) javob beradi. Ish vaqtidan tashqari xabar qoldirsangiz, ertasi kuni ertalab bog'lanamiz." },
+  { id: "kb11", title: "Maxfiylik", type: "policy", status: "published", keywords: "maxfiylik shaxsiy malumot saqlanadi himoya rozilik ochirish",
+    text: "Shaxsiy va salomatlik ma'lumotlari faqat sizning roziligingiz bilan, shifrlangan holda saqlanadi. Roziligingizni qaytarish yoki ma'lumotlarni o'chirishni so'rash mumkin." },
+  { id: "kb12", title: "Buyurtma berish", type: "faq", status: "published", keywords: "buyurtma berish rasmiylashtirish qanday olaman sotib olish xarid beraman berish bering",
+    text: "Buyurtma uchun \"Buyurtma\" bo'limida paketni tanlang, ism, telefon, viloyat, tuman va manzilni kiriting hamda to'lov usulini belgilang. Tasdiqlangach buyurtma raqami beriladi." },
+];
+/* ===== KB END ===== */
+/* ===== UI ===== */
+const $ = (s, r) => (r || document).querySelector(s);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+/* ---- SOZLAMALAR: o'zingizning ma'lumotlaringizni yozing (bo'sh qoldirsangiz, tugma ko'rinmaydi) ---- */
+const CONFIG = { tgBot: "doxtir_uzz_bot", instagram: "", phone: "+998777777777", ntl: true, admin: true, api: true }; // tgBot: "mybot" (@siz), instagram: "mypage", phone: "+998 90 123-45-67", admin: false (Admin bo'limini yashirish)
+const UA = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+const LS_KEY = "mf_demo_v1";
+function lsGet() { try { return JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) { return null; } }
+function lsSet(v) { try { localStorage.setItem(LS_KEY, JSON.stringify(v)); } catch (e) { /* xotira yopiq bo'lishi mumkin */ } }
+
+const SOURCES = {
+  ig: { label: "Instagram Reels", utm: { utm_source: "instagram", utm_medium: "reels", utm_campaign: "quiz_women30_2610", utm_content: "reels_v3_hook2" } },
+  tg: { label: "Telegram kanal", utm: { utm_source: "telegram", utm_medium: "tg_channel", utm_campaign: "quiz_couples_2610", utm_content: "post_0710" } },
+  fb: { label: "Facebook reklama", utm: { utm_source: "facebook", utm_medium: "paid_social", utm_campaign: "quiz_men35_2610", utm_content: "carousel_a" } },
+  yt: { label: "YouTube video", utm: { utm_source: "youtube", utm_medium: "organic", utm_campaign: "edu_video_2610", utm_content: "video_x12" } },
+  direct: { label: "To'g'ridan-to'g'ri", utm: { utm_source: "direct", utm_medium: "none", utm_campaign: "", utm_content: "" } },
+};
+const CHANNELS = ["instagram", "telegram", "facebook", "youtube", "direct"];
+const CH_LABEL = { instagram: "Instagram", telegram: "Telegram", facebook: "Facebook", youtube: "YouTube", direct: "To'g'ridan-to'g'ri" };
+const SC_LABEL = { m: "Erkak", f: "Ayol", c: "Juftlik" };
+const LEAD_STATUS = ["new", "quiz_done", "contacted", "qualified", "ordered", "paid", "delivered", "lost"];
+const ORDER_STATUS = ["pending_payment", "placed", "paid", "packed", "shipped", "delivered", "cancelled", "returned"];
+const PAY_LABEL = { payme: "Payme", click: "Click", uzum: "Uzum", cod: "Naqd (yetkazganda)" };
+
+const HOUR = 3600000;
+function seedDB() {
+  const now = Date.now();
+  const u = (k) => SOURCES[k].utm;
+  return {
+    v: 1,
+    prices: { 1: 190000, 2: 340000, 3: 480000 },
+    priceHistory: [],
+    kb: JSON.parse(JSON.stringify(SEED_KB)),
+    leads: [
+      { id: "L1001", name: "Dilnoza A.", phone: "+998 (90) 123-••-••", scenario: "f", index: 54, band: "attention", flags: ["TRY_6M_35"], weak: ["history", "stress_sleep", "lifestyle"], grade: "A", first: u("ig"), last: u("tg"), status: "contacted", tg: true, bought: false, flagged: true, t: now - 30 * HOUR, sample: true },
+      { id: "L1002", name: "Jasur M.", phone: "+998 (93) 555-••-••", scenario: "m", index: 71, band: "medium", flags: [], weak: ["lifestyle", "nutrition", "stress_sleep"], grade: "B", first: u("fb"), last: u("fb"), status: "qualified", tg: false, bought: false, flagged: false, t: now - 52 * HOUR, sample: true },
+      { id: "L1003", name: "Madina va Aziz", phone: "+998 (97) 777-••-••", scenario: "c", index: 83, band: "high", flags: [], weak: ["nutrition", "stress_sleep", "lifestyle"], grade: "B", first: u("tg"), last: u("tg"), status: "ordered", tg: true, bought: true, flagged: false, t: now - 96 * HOUR, sample: true },
+      { id: "L1004", name: "Sevara K.", phone: "+998 (99) 311-••-••", scenario: "f", index: 33, band: "consult", flags: ["CYCLE_IRREG", "TRY_12M"], weak: ["spec", "history", "lifestyle"], grade: "A", first: u("yt"), last: u("ig"), status: "new", tg: false, bought: false, flagged: true, t: now - 5 * HOUR, sample: true },
+      { id: "L1005", name: "Bobur T.", phone: "+998 (91) 222-••-••", scenario: "m", index: 48, band: "attention", flags: ["MED_HISTORY"], weak: ["history", "spec", "lifestyle"], grade: "A", first: u("ig"), last: u("ig"), status: "quiz_done", tg: false, bought: false, flagged: true, t: now - 12 * HOUR, sample: true },
+    ],
+    orders: [
+      { id: "MF-5001", lead: "L1003", name: "Madina va Aziz", qty: 2, total: 360000, region: "Toshkent shahri", district: "Chilonzor", pay: "payme", status: "delivered", last: u("tg"), t: now - 90 * HOUR, sample: true },
+      { id: "MF-5002", lead: "", name: "Gulnora S.", qty: 1, total: 220000, region: "Samarqand viloyati", district: "Urgut", pay: "click", status: "paid", last: u("ig"), t: now - 40 * HOUR, sample: true },
+      { id: "MF-5003", lead: "", name: "Rustam N.", qty: 3, total: 510000, region: "Namangan viloyati", district: "Chust", pay: "cod", status: "placed", last: u("fb"), t: now - 8 * HOUR, sample: true },
+    ],
+    events: [],
+    handoffs: [],
+    seq: { lead: 1005, order: 5003, ho: 0 },
+    base: {
+      instagram: { page_view: 1800, quiz_start: 540, quiz_finish: 372, lead_created: 168, checkout_start: 61, purchase: 38, spend: 3200000 },
+      telegram: { page_view: 950, quiz_start: 330, quiz_finish: 241, lead_created: 121, checkout_start: 52, purchase: 34, spend: 1500000 },
+      facebook: { page_view: 1200, quiz_start: 288, quiz_finish: 190, lead_created: 72, checkout_start: 24, purchase: 13, spend: 2400000 },
+      youtube: { page_view: 420, quiz_start: 110, quiz_finish: 80, lead_created: 36, checkout_start: 15, purchase: 10, spend: 600000 },
+      direct: { page_view: 600, quiz_start: 90, quiz_finish: 61, lead_created: 21, checkout_start: 10, purchase: 7, spend: 0 },
+    },
+    baseAov: 285000,
+  };
+}
+let DB = (() => { const s = lsGet(); return s && s.v === 1 ? s : seedDB(); })();
+function save() { lsSet(DB); }
+
+const S = {
+  view: "home", adminTab: "dash", src: "direct", first: SOURCES.direct.utm, touch: SOURCES.direct.utm, cbDone: null, tg: null, showPh: false,
+  quiz: { sc: null, answers: {}, i: 0, started: false }, result: null, lead: null,
+  qty: 1, orderDone: null, coTracked: false,
+  chat: [{ role: "ai", greet: true, text: "Salom! Men MegaFertil ma'lumot yordamchisiman. Narx, to'lov, yetkazish, buyurtma yoki test natijasi haqida so'rang. Men shifokor emasman va tashxis qo'ymayman." }],
+  chatState: "ai", trace: null, selLead: null, kbMsg: null, priceMsg: null,
+};
+const sid = Math.random().toString(36).slice(2, 10);
+try { /* haqiqiy havoladan UTM o'qish (Netlify'da ishlaydi) */
+  const q = new URLSearchParams(location.search), us = q.get("utm_source");
+  if (us) {
+    const u = { utm_source: us.toLowerCase().slice(0, 40), utm_medium: (q.get("utm_medium") || "none").toLowerCase().slice(0, 40), utm_campaign: (q.get("utm_campaign") || "").slice(0, 60), utm_content: (q.get("utm_content") || "").slice(0, 60) };
+    SOURCES.custom = { label: "Havoladan (UTM)", utm: u }; S.src = "custom"; S.first = u; S.touch = u;
+  }
+  else {
+    const det = /Instagram/i.test(UA) ? "instagram" : /Telegram/i.test(UA) ? "telegram" : null;
+    if (det) { const u = { utm_source: det, utm_medium: "in_app_browser", utm_campaign: "", utm_content: "" }; SOURCES.custom = { label: (det === "instagram" ? "Instagram" : "Telegram") + " (brauzer aniqladi)", utm: u }; S.src = "custom"; S.first = u; S.touch = u; }
+  }
+} catch (e) { /* ignore */ }
+function social() { const s = (S.touch.utm_source || "").toLowerCase(); if (/Instagram/i.test(UA) || s === "instagram") return "Instagram"; if (/Telegram/i.test(UA) || s === "telegram") return "Telegram"; return null; }
+function pushView(v) { try { history.pushState({ mf: v }, ""); } catch (e) { /* tarix yopiq */ } }
+function track(name, props) {
+  DB.events.push({ t: Date.now(), name, src: S.touch.utm_source, first: S.first.utm_source, sid, p: props || {} });
+  if (DB.events.length > 300) DB.events.shift();
+  save();
+}
+const fmtT = (ms) => { const d = new Date(ms + 5 * HOUR); const p = (n) => String(n).padStart(2, "0"); return `${p(d.getUTCDate())}.${p(d.getUTCMonth() + 1)} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`; };
+const srcLabel = (u) => (u && u.utm_source ? u.utm_source + (u.utm_medium && u.utm_medium !== "none" ? " / " + u.utm_medium : "") : "—");
+const packPrice = (q) => DB.prices[q];
+const curBand = () => (S.result ? S.result.band : null);
+
+/* ---------- ko'rinishlar ---------- */
+function header() {
+  const tabs = [["home", "Sayt"], ["quiz", "Test"], ["ai", "AI-maslahatchi"], ["order", "Buyurtma"], ["contact", "Aloqa"], ["admin", "Admin"]].filter((t) => CONFIG.admin || t[0] !== "admin");
+  const open = DB.handoffs.filter((h) => h.status === "open").length + DB.leads.filter((l) => l.callback && l.status === "new").length;
+  return `<header class="top"><div class="top-in"><div class="brand">MegaFertil <i>DEMO</i></div>
+  <nav class="nav" aria-label="Bo'limlar">${tabs.map(([k, l]) => `<button class="tab" data-a="nav" data-v="${k}" ${S.view === k || (k === "quiz" && S.view === "result") ? 'aria-current="true"' : ""}>${l}${k === "admin" && open ? ` <span class="pill consult">${open}</span>` : ""}</button>`).join("")}</nav></div></header>
+  <div class="wrap demo"><label for="srcSel">Trafik manbasi (demo):</label>
+  <select id="srcSel" data-ch="src">${Object.entries(SOURCES).map(([k, v]) => `<option value="${k}" ${S.src === k ? "selected" : ""}>${v.label}</option>`).join("")}</select>
+  <span>Birinchi aloqa: <b>${esc(srcLabel(S.first))}</b> · Oxirgi: <b>${esc(srcLabel(S.touch))}</b></span>
+  <span class="small">Haqiqiy tizimda UTM havoladan avtomatik o'qiladi.</span></div>`;
+}
+
+function viewHome() {
+  const p = DB.prices[1];
+  return `<section class="hero"><div class="stack">
+    <p class="eyebrow">Bepul test · 2 daqiqa · 15 savol</p>
+    <h1>Farzand rejalashtirishdan oldin turmush tarzingiz indeksini biling</h1>
+    <p class="lead">Test sizning odatlaringiz va xavf omillaringiz bo'yicha 0–100 indeks hisoblaydi va qaysi sohaga e'tibor berish kerakligini ko'rsatadi. Bu tashxis emas.</p>
+    <div class="grid g3">
+      <button class="sc" data-a="startQuiz" data-sc="m"><b>Men — erkak</b><span>15 savol, 6 tasi erkak salomatligiga oid</span></button>
+      <button class="sc" data-a="startQuiz" data-sc="f"><b>Men — ayol</b><span>15 savol, 6 tasi siklga oid</span></button>
+      <button class="sc" data-a="startQuiz" data-sc="c"><b>Biz — juftlik</b><span>Ikki indeks va umumiy natija</span></button>
+    </div></div>
+    <aside class="card stack"><h3>Test nima beradi</h3>
+      <ul class="stack small" style="margin:0;padding-left:1.1rem;gap:8px"><li>5 ta soha bo'yicha ballar: turmush tarzi, ovqatlanish, uyqu va stress, sikl yoki erkak omillari, ko'riklar.</li><li>Qizil bayroq bo'lsa, natijada birinchi o'rinda shifokorga murojaat tavsiyasi chiqadi.</li><li>Natija darhol ko'rinadi, telefon raqami majburiy emas.</li></ul></aside></section>
+  <section style="padding-top:12px;padding-bottom:12px">${cbCard(social() ? social() + "dan keldingizmi? Qo'ng'iroq qilib beramiz" : "Savolingiz bormi? Qo'ng'iroq qilib beramiz", "Telefon raqamingizni qoldiring, menejer qulay vaqtda bog'lanadi. Majburiy emas.")}</section>
+  <section class="grid g2" style="padding-top:12px;padding-bottom:12px">
+    <div class="card stack"><p class="eyebrow">Mahsulot</p><h2>MegaFertil Multikomplex</h2>
+      <p class="muted">Vitamin va minerallar majmuasi sifatida pozitsiyalanadigan qo'shimcha. Dori emas va kasallikni davolash uchun mo'ljallanmagan. Tarkib va qabul qilish tartibi qadoqdagi yo'riqnoma bo'yicha beriladi (demo matn).</p>
+      <div class="row"><b style="font-size:1.4rem;font-family:var(--f-display)">${fmtSum(p)}</b><span class="pill sample">demo narx</span></div>
+      <div class="row"><button class="btn btn-primary" data-a="nav" data-v="order">Buyurtma berish</button><button class="btn" data-a="nav" data-v="ai">Savol berish</button></div></div>
+    <div class="card stack"><p class="eyebrow">Qanday ishlaydi</p>
+      <ol class="steps"><li>Stsenariyni tanlaysiz: erkak, ayol yoki juftlik.</li><li>15 ta savolga javob berasiz; javoblar avtomatik saqlanadi.</li><li>Indeks va qisqa tavsiyalarni darhol ko'rasiz.</li><li>Xohlasangiz, to'liq hisobotni Telegram yoki telefonda olasiz.</li></ol></div></section>
+  <p class="notice small" style="margin-top:16px">Bu sayt ma'lumot beradi va tibbiy xizmat emas. Sog'liq bo'yicha savollar uchun shifokor bilan maslahatlashing.</p>
+  <div class="stickycta on"><button class="btn btn-primary" style="width:100%" data-a="startQuiz" data-sc="">Bepul testni boshlash</button></div>`;
+}
+
+function curQ() { const sc = S.quiz.sc; return QS[(sc ? FLOW[sc] : ["Q1"])[S.quiz.i]]; }
+function viewQuiz() {
+  const q = curQ() || QS.Q1; const sel = S.quiz.answers[q.code];
+  return `<section class="quiz"><div class="qhead"><button class="btn btn-sm" data-a="back">← Orqaga</button><span class="muted small"><b>${S.quiz.i + 1}</b> / 15</span></div>
+  <div class="progress" role="progressbar" aria-valuenow="${S.quiz.i + 1}" aria-valuemin="1" aria-valuemax="15"><div style="width:${((S.quiz.i + 1) / 15) * 100}%"></div></div>
+  <h2>${esc(q.t)}</h2><div class="opts">${q.opts.map((x) => `<button class="opt ${sel === x.id ? "sel" : ""}" data-a="ans" data-o="${x.id}">${esc(x.t)}</button>`).join("")}</div>
+  <p class="muted small">Javoblar avtomatik saqlanadi. Natija tashxis emas, turmush tarzi bo'yicha indeks.</p></section>`;
+}
+
+function gauge(idx, band) {
+  const r = 54, c = 2 * Math.PI * r, len = (c * idx) / 100;
+  return `<svg class="gauge" viewBox="0 0 140 140" role="img" aria-label="Indeks ${idx} / 100"><circle cx="70" cy="70" r="${r}" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="70" cy="70" r="${r}" fill="none" stroke="var(--b-${band})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${len.toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 70 70)"/><text x="70" y="76" text-anchor="middle" class="g-num">${idx}</text><text x="70" y="96" text-anchor="middle" class="g-sub">/ 100</text></svg>`;
+}
+function viewResult() {
+  const r = S.result;
+  if (!r) return `<section class="quiz"><p>Natija topilmadi.</p><button class="btn btn-primary" data-a="startQuiz" data-sc="">Testni boshlash</button></section>`;
+  const flagged = r.flags.length > 0;
+  const parts = r.parts.map((p) => `<div class="card stack"><h3>${esc(p.label)} indeksi: ${p.idx}</h3><div class="bars">${DOMAINS.filter((d) => p.domains[d] != null).map((d) => `<div class="bar"><span class="lbl">${DOMAIN_LABEL[d]}</span><div class="track"><div style="width:${p.domains[d]}%"></div></div><span class="num">${p.domains[d]}</span></div>`).join("")}</div></div>`).join("");
+  const gate = S.lead
+    ? `<div class="notice ok stack"><b>Rahmat! Ma'lumotlaringiz saqlandi (lid ${esc(S.lead.id)}).</b><span class="small">CRM ga yuborish navbatga qo'yildi (demo). Menejer ish vaqtida (09:00–21:00) bog'lanadi.</span>
+      ${S.lead.tg ? `<span class="small">Telegram ulandi (demo).</span>` : `<div class="stack"><span class="small">Telegramda davom eting, savollaringizga shu yerda javob beramiz:</span>${CONFIG.tgBot ? `<a class="btn btn-sm" style="align-self:flex-start" href="https://t.me/${esc(CONFIG.tgBot)}?start=${esc(S.lead.token)}" target="_blank" rel="noopener">Telegramda ochish</a>` : `<code class="copy">t.me/megafertil_demo_bot?start=${esc(S.lead.token)}</code><button class="btn btn-sm" data-a="bindTg" style="align-self:flex-start">Botni ulash (demo)</button>`}</div>`}</div>`
+    : `<form id="leadForm" class="card stack" novalidate><h3>To'liq hisobot va shaxsiy reja</h3><p class="muted small">Majburiy emas. Raqam faqat hisobotni yuborish va menejer qo'ng'irog'i uchun ishlatiladi.</p>
+      <label class="f" for="l_name">Ismingiz (ixtiyoriy)<input type="text" id="l_name" autocomplete="given-name"></label>
+      <label class="f" for="l_phone">Telefon<input type="tel" id="l_phone" inputmode="tel" autocomplete="tel" placeholder="+998 (90) 123-45-67"></label><div class="err" id="e_l_phone"></div>
+      <label class="chk"><input type="checkbox" id="l_consent"><span>Shaxsiy va salomatlik ma'lumotlarimni qayta ishlashga roziman (majburiy).</span></label><div class="err" id="e_l_consent"></div>
+      <label class="chk"><input type="checkbox" id="l_mkt"><span>Foydali xabarlar olishni xohlayman (ixtiyoriy, istalgan vaqtda to'xtatish mumkin).</span></label>
+      <button class="btn btn-primary" type="submit">Hisobotni olish</button></form>`;
+  return `<section class="stack" style="padding-top:24px;padding-bottom:24px">
+  ${flagged ? `<div class="notice crit stack"><b>Avval shifokor bilan maslahatlashishni tavsiya qilamiz.</b><ul style="margin:0;padding-left:1.1rem" class="small">${r.flags.map((f) => `<li>${esc(FLAG_LABEL[f])}</li>`).join("")}</ul><span class="small">Bu belgilar tashxis emas, lekin mutaxassis ko'rigi foydali bo'lishi mumkin.</span></div>` : ""}
+  <div class="card row" style="gap:24px">${gauge(r.index, r.band)}<div class="stack" style="flex:1;min-width:220px"><span class="pill ${r.band}" style="align-self:flex-start">${BAND_LABEL[r.band]}</span><h2>Sizning indeksingiz: ${r.index}</h2>
+  <p class="muted">${r.scenario === "c" ? "Bu juftlik uchun umumiy indeks; zaif tomon natijani ko'tarib yubormaydi. " : ""}Indeks turmush tarzi va xavf omillarini baholaydi, tibbiy xulosa emas.</p></div></div>
+  <div class="grid g2">${parts}</div>
+  <div class="card stack"><h3>E'tibor berish mumkin bo'lgan sohalar</h3><ol class="steps">${r.weak.map((d) => `<li><b>${DOMAIN_LABEL[d]}.</b> ${esc(TIPS[d])}</li>`).join("")}</ol></div>
+  ${gate}
+  <div class="row"><button class="btn" data-a="nav" data-v="ai">AI-maslahatchiga savol</button><button class="btn ${flagged ? "" : "btn-primary"}" data-a="nav" data-v="order">Mahsulotga o'tish</button><button class="btn" data-a="startQuiz" data-sc="">Testni qayta o'tish</button></div>
+  <p class="notice small">Bu tashxis emas. Aniq xulosa uchun shifokor bilan maslahatlashing.</p></section>`;
+}
+
+const CHAT_CHIPS = ["Narxi qancha?", "Yetkazib berish necha kun?", "Bu dori emasmi?", "Qaysi to'lov usullari bor?", "Kuniga necha marta ichaman?", "Qorin og'rig'im bor", "Menejer bilan gaplashmoqchiman", "Test natijasi nimani anglatadi?"];
+function traceHtml() {
+  const t = S.trace;
+  if (!t) return `<p class="muted small">Savol yuboring: bu yerda guardrail, qidiruv bali va qaror ko'rinadi.</p>`;
+  const hits = t.hits.map((h) => `<li><code>${esc(h.doc.id)}</code> ${esc(h.doc.title)} <b>${h.score.toFixed(2)}</b> ${h.score >= TAU ? "≥" : "<"} τ</li>`).join("");
+  const dec = t.handoff ? `handoff: <code>${t.handoff.code}</code> (${t.handoff.priority})` : t.sources.length ? "javob KB dan, manba ko'rsatildi" : "rad etildi";
+  return `<div class="trace"><div>1. Kirish guardrail: <code>${t.risk}</code>${t.via ? ` · rejim: <code>${esc(t.via)}</code>` : ""}</div><div>2. Qidiruv (BM25-uslubidagi, τ = ${TAU}):</div>${hits ? `<ul style="margin:0;padding-left:1.1rem">${hits}</ul>` : `<div class="muted">ketma-ketlik yo'q (guardrail qidiruvdan oldin to'xtatdi yoki mos hujjat topilmadi)</div>`}<div>3. Chiqish validatori: taqiqlangan da'volar yo'q</div><div>4. Qaror: ${dec}</div></div>`;
+}
+function viewAI() {
+  const msgs = S.chat.map((m, i) => {
+    const offer = m.offer ? `<div style="margin-top:8px"><button class="btn btn-sm" data-a="handoff" data-code="${m.offer.code}" data-pr="${m.offer.priority}" data-i="${i}">Menejerga ulash</button></div>` : "";
+    return `<div class="msg ${m.role}">${esc(m.text)}${m.sources && m.sources.length ? `<span class="src">Manba: ${esc(m.sources.join(", "))}</span>` : ""}${offer}</div>`;
+  }).join("");
+  return `<section class="grid g2" style="padding-top:24px;padding-bottom:24px;align-items:start">
+  <div class="card stack"><div class="row" style="justify-content:space-between"><h2>AI-maslahatchi</h2><span class="pill sample">demo</span></div>
+  <p class="notice small">Demo rejim: haqiqiy LLM ulanmagan. Javoblar faqat tasdiqlangan bilimlar bazasidan olinadi (Admin → Bilim bazasi), guardrail qoidalari esa haqiqiy tizimdagidek ishlaydi.</p>
+  ${S.result ? `<p class="small muted">Test natijasi ulangan: indeks ${S.result.index} (${BAND_LABEL[S.result.band]}). AI ga faqat shu raqamlar beriladi, ism yoki telefon emas.</p>` : ""}
+  <div class="chat" id="chatBox" aria-live="polite">${msgs}</div>
+  <div class="chips">${CHAT_CHIPS.map((c) => `<button class="chip" data-a="chip" data-q="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+  <form id="chatForm" class="row" style="flex-wrap:nowrap"><input type="text" id="chatIn" autocomplete="off" placeholder="Savolingizni yozing" maxlength="300" aria-label="Savol"><button class="btn btn-primary" type="submit">Yuborish</button></form></div>
+  <div class="stack">${S.chatState === "handed" ? cbCard("Menejer sizga qo'ng'iroq qilsin", "Raqamingizni qoldiring, menejer suhbat mazmunini ko'rib, o'zi bog'lanadi.") : ""}<div class="card stack"><h3>Pipeline izi</h3>${traceHtml()}</div></div></section>`;
+}
+
+function viewOrder() {
+  const flagged = S.result && S.result.flags.length;
+  return `<section class="stack" style="padding-top:24px;padding-bottom:24px;max-width:760px;margin-left:auto;margin-right:auto">
+  <h2>Buyurtma</h2>
+  ${flagged ? `<div class="notice">Test natijangiz bo'yicha avval shifokor bilan maslahatlashishni tavsiya qilamiz. Buyurtma majburiy emas.</div>` : ""}
+  <form id="orderForm" class="stack" novalidate>
+  <fieldset style="border:0;padding:0;margin:0" class="stack"><legend class="eyebrow" style="padding:0;margin-bottom:8px">Paket</legend><div class="packs">
+  ${[1, 2, 3].map((q) => `<label class="pack"><input type="radio" name="qty" value="${q}" ${S.qty === q ? "checked" : ""}><b>${q} qadoq</b><span>${fmtSum(DB.prices[q])}</span><span class="muted small">${fmtSum(DB.prices[q] / q)} / qadoq</span></label>`).join("")}</div></fieldset>
+  <div class="grid g2"><label class="f" for="f_name">Ism<input type="text" id="f_name" autocomplete="name"><span class="err" id="e_name"></span></label>
+  <label class="f" for="f_phone">Telefon<input type="tel" id="f_phone" inputmode="tel" autocomplete="tel" placeholder="+998 (90) 123-45-67"><span class="err" id="e_phone"></span></label>
+  <label class="f" for="f_region">Viloyat<select id="f_region" data-ch="region"><option value="">Tanlang</option>${REGIONS.map((r) => `<option value="${r.id}">${r.n}</option>`).join("")}</select><span class="err" id="e_region"></span></label>
+  <label class="f" for="f_district">Tuman<select id="f_district" data-ch="sum"><option value="">Avval viloyatni tanlang</option></select><span class="err" id="e_district"></span></label></div>
+  <label class="f" for="f_addr">Manzil<input type="text" id="f_addr" autocomplete="street-address" placeholder="Ko'cha, uy, xonadon"><span class="err" id="e_address"></span></label>
+  <fieldset style="border:0;padding:0;margin:0" class="stack"><legend class="eyebrow" style="padding:0;margin-bottom:8px">To'lov usuli</legend><div class="packs">
+  ${Object.entries(PAY_LABEL).map(([k, l], i) => `<label class="pack"><input type="radio" name="pay" value="${k}" ${i === 0 ? "checked" : ""}><b>${l}</b></label>`).join("")}</div></fieldset>
+  <label class="f" for="f_promo">Promo-kod (sinash uchun: TEST10)<input type="text" id="f_promo" data-in="sum" autocomplete="off"></label>
+  <div class="card" id="sumBox"></div>
+  <label class="chk"><input type="checkbox" id="f_adult"><span>18 yoshdan oshganman.</span></label><div class="err" id="e_adult"></div>
+  <label class="chk"><input type="checkbox" id="f_consent"><span>Shaxsiy ma'lumotlarimni buyurtmani bajarish uchun qayta ishlashga roziman.</span></label><div class="err" id="e_consent"></div>
+  <button class="btn btn-primary" type="submit">Buyurtmani tasdiqlash</button>
+  <p class="muted small">Demo: haqiqiy to'lov olinmaydi. Viloyat va tumanlar ro'yxati qisqartirilgan.</p></form></section>`;
+}
+function sumHtml() {
+  const qty = Number((document.querySelector('input[name="qty"]:checked') || {}).value || S.qty);
+  const reg = REGIONS.find((r) => r.id === ($("#f_region") || {}).value);
+  const c = calcOrder(DB.prices[qty], 1, ($("#f_promo") || {}).value, reg ? reg.z : "C");
+  return `<div class="sum"><span>${qty} qadoq</span><span>${fmtSum(c.sub)}</span></div>
+  ${c.promoOk === true ? `<div class="sum"><span>Chegirma (TEST10)</span><span>−${fmtSum(c.disc)}</span></div>` : c.promoOk === false ? `<div class="sum err"><span>Promo-kod topilmadi</span><span></span></div>` : ""}
+  <div class="sum"><span>Yetkazib berish ${reg ? "" : "(viloyat tanlanmagan, taxminiy)"}</span><span>${c.fee ? fmtSum(c.fee) : "bepul"}</span></div>
+  <div class="sum total"><span>Jami</span><span>${fmtSum(c.total)}</span></div>`;
+}
+
+function cbCard(title, sub) {
+  if (S.cbDone) return `<div class="notice ok stack"><b>Rahmat! So'rovingiz qabul qilindi.</b><span class="small">${S.cbDone.work ? "Menejer 09:00–21:00 oralig'ida qo'ng'iroq qiladi." : "Hozir ish vaqtidan tashqari. Ertaga 09:00 dan keyin qo'ng'iroq qilamiz."}${S.cbDone.time ? " Qulay vaqt: " + esc(S.cbDone.time) + "." : ""}</span>${CONFIG.tgBot && S.lead && S.lead.token ? `<a class="btn btn-sm" style="align-self:flex-start" href="https://t.me/${esc(CONFIG.tgBot)}?start=${esc(S.lead.token)}" target="_blank" rel="noopener">Telegramda ham yozish</a>` : ""}</div>`;
+  return `<form id="cbForm" class="card stack" novalidate><h3>${title}</h3><p class="muted small">${sub}</p>
+  <input type="text" id="cb_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+  <div class="grid g2"><label class="f" for="cb_name">Ism (ixtiyoriy)<input type="text" id="cb_name" autocomplete="given-name" value="${esc(S.tg ? S.tg.name : "")}"></label>
+  <label class="f" for="cb_phone">Telefon<input type="tel" id="cb_phone" inputmode="tel" autocomplete="tel" placeholder="+998 (90) 123-45-67"><span class="err" id="e_cb_phone"></span></label></div>
+  <label class="f" for="cb_time">Qachon qo'ng'iroq qilaylik?<select id="cb_time"><option>Imkon qadar tezroq</option><option>1 soatdan keyin</option><option>Kechqurun (18:00–21:00)</option><option>Ertaga ertalab</option></select></label>
+  <label class="chk"><input type="checkbox" id="cb_consent"><span>Telefon raqamim bilan bog'lanishga va ma'lumotlarimni qayta ishlashga roziman.</span></label><div class="err" id="e_cb_consent"></div>
+  <button class="btn btn-primary" type="submit">Qo'ng'iroq so'rash</button></form>`;
+}
+function viewContact() {
+  const links = [];
+  if (CONFIG.tgBot) links.push(`<a class="btn" href="https://t.me/${esc(CONFIG.tgBot)}" target="_blank" rel="noopener">Telegramda yozish</a>`);
+  if (CONFIG.instagram) links.push(`<a class="btn" href="https://ig.me/m/${esc(CONFIG.instagram)}" target="_blank" rel="noopener">Instagram Direct</a>`);
+  return `<section class="stack" style="padding-top:24px;padding-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto"><h2>Aloqa</h2>
+  ${cbCard("Qo'ng'iroq so'rash", "Raqamingizni qoldiring, menejer bog'lanadi.")}
+  ${links.length || CONFIG.phone ? `<div class="card stack"><h3>Boshqa usullar</h3>${links.length ? `<div class="row">${links.join("")}</div>` : ""}${CONFIG.phone ? `<p>Telefon: <b>${esc(CONFIG.phone)}</b></p>` : ""}</div>` : ""}
+  <p class="muted small">Menejerlar har kuni 09:00–21:00 (Toshkent vaqti) javob beradi.</p></section>`;
+}
+function viewDone() {
+  const o = S.orderDone;
+  if (!o) return `<section class="quiz"><p>Buyurtma yo'q.</p></section>`;
+  const lead = DB.leads.find((l) => l.id === o.lead);
+  const ctx = { idx: lead ? lead.index : "—", band: lead ? lead.band : "", weak: "", tg: lead ? lead.tg : false };
+  const sch = schedule("B", new Date(o.t + 2 * 86400000), ctx);
+  return `<section class="stack" style="padding-top:24px;padding-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto">
+  <div class="notice ok"><h2>Buyurtma ${esc(o.id)} qabul qilindi</h2><p class="small" style="margin-top:6px">${esc(o.name)}, ${esc(o.region)}, ${esc(o.district)} · ${o.qty} qadoq · <b>${fmtSum(o.total)}</b> · ${PAY_LABEL[o.pay]}</p></div>
+  <div class="card stack"><h3>Holat: <span class="pill">${o.status}</span></h3>
+  ${o.status === "pending_payment" ? `<p class="muted small">Haqiqiy tizimda siz ${PAY_LABEL[o.pay]} sahifasiga o'tasiz. Demo uchun to'lovni simulyatsiya qiling.</p><button class="btn btn-primary" data-a="pay" style="align-self:flex-start">To'lovni simulyatsiya qilish</button>` : `<p class="muted small">Buyurtma CRM ga yuborildi (demo) va menejerga ko'rinadi.</p>`}</div>
+  <div class="card stack"><h3>Xariddan keyingi xabarlar (yetkazilgandan so'ng)</h3><div class="tbl"><table><thead><tr><th>Kun</th><th>Kanal</th><th>Xabar</th></tr></thead><tbody>${sch.map((s) => `<tr><td>+${s.d}</td><td>${s.channel}</td><td>${esc(s.text)}</td></tr>`).join("")}</tbody></table></div><p class="muted small">Yuborish vaqti: 10:00 (Toshkent), jimlik oynasi 09:00–21:00.</p></div>
+  <div class="row"><button class="btn" data-a="nav" data-v="home">Bosh sahifa</button><button class="btn" data-a="nav" data-v="admin">Adminda ko'rish</button></div></section>`;
+}
+
+/* ---------- admin ---------- */
+function agg() {
+  const keys = ["page_view", "quiz_start", "quiz_finish", "lead_created", "checkout_start", "purchase"];
+  const out = {};
+  for (const ch of CHANNELS) { out[ch] = { ...DB.base[ch], revenue: DB.base[ch].purchase * DB.baseAov }; }
+  for (const e of DB.events) { const ch = out[e.src] ? e.src : "direct"; if (keys.includes(e.name)) out[ch][e.name] = (out[ch][e.name] || 0) + 1; }
+  for (const o of DB.orders) { if (o.sample) continue; if (["paid", "placed", "packed", "shipped", "delivered"].includes(o.status)) { const ch = out[o.last.utm_source] ? o.last.utm_source : "direct"; out[ch].revenue += o.total; } }
+  const tot = { spend: 0, revenue: 0 };
+  for (const k of keys) tot[k] = 0;
+  for (const ch of CHANNELS) { for (const k of keys) tot[k] += out[ch][k]; tot.spend += out[ch].spend; tot.revenue += out[ch].revenue; }
+  return { out, tot, keys };
+}
+const pct = (a, b) => (b ? (100 * a / b).toFixed(1) + "%" : "—");
+function adminDash() {
+  const { out, tot } = agg();
+  const steps = [["Tashrif", "page_view"], ["Test boshladi", "quiz_start"], ["Test tugatdi", "quiz_finish"], ["Lid", "lead_created"], ["Checkout", "checkout_start"], ["Xarid", "purchase"]];
+  const max = tot.page_view || 1;
+  return `<div class="stack"><p class="notice small">Ko'rsatkichlar = namuna tarixiy ma'lumot + siz demoda qilgan harakatlar. Hisobotlar oxirgi tegishli (last non-direct) manba bo'yicha.</p>
+  <div class="kpis"><div class="kpi"><b>${tot.lead_created}</b><span>Lid</span></div><div class="kpi"><b>${tot.purchase}</b><span>Xarid</span></div><div class="kpi"><b>${pct(tot.quiz_finish, tot.quiz_start)}</b><span>Testni tugatish</span></div><div class="kpi"><b>${tot.spend ? fmtSum(tot.spend / Math.max(tot.lead_created, 1)) : "—"}</b><span>CPL</span></div><div class="kpi"><b>${tot.spend ? fmtSum(tot.spend / Math.max(tot.purchase, 1)) : "—"}</b><span>CAC</span></div><div class="kpi"><b>${tot.spend ? (tot.revenue / tot.spend).toFixed(2) + "×" : "—"}</b><span>ROAS</span></div></div>
+  <div class="card stack"><h3>Voronka</h3>${steps.map(([l, k], i) => `<div class="fun"><span>${l}</span><div class="track"><div style="width:${Math.max(1, (100 * tot[k]) / max)}%"></div></div><span class="num" style="text-align:right;font-variant-numeric:tabular-nums">${tot[k]} ${i ? `<span class="muted small">(${pct(tot[k], tot[steps[i - 1][1]])})</span>` : ""}</span></div>`).join("")}</div>
+  <div class="tbl"><table><thead><tr><th>Manba</th><th class="n">Tashrif</th><th class="n">Test</th><th class="n">Lid</th><th class="n">Xarid</th><th class="n">Xarajat</th><th class="n">CPL</th><th class="n">ROAS</th></tr></thead><tbody>
+  ${CHANNELS.map((ch) => { const r = out[ch]; return `<tr><td>${CH_LABEL[ch]}</td><td class="n">${r.page_view}</td><td class="n">${r.quiz_finish}</td><td class="n">${r.lead_created}</td><td class="n">${r.purchase}</td><td class="n">${r.spend ? fmtSum(r.spend) : "—"}</td><td class="n">${r.spend ? fmtSum(r.spend / Math.max(r.lead_created, 1)) : "—"}</td><td class="n">${r.spend ? (r.revenue / r.spend).toFixed(2) + "×" : "—"}</td></tr>`; }).join("")}</tbody></table></div></div>`;
+}
+const selHtml = (opts, cur, attrs) => `<select ${attrs}>${opts.map((x) => `<option value="${x}" ${x === cur ? "selected" : ""}>${x}</option>`).join("")}</select>`;
+function adminLeads() {
+  const rows = [...DB.leads].sort((a, b) => b.t - a.t);
+  const sel = DB.leads.find((l) => l.id === S.selLead);
+  let panel = "";
+  if (sel) {
+    const ctx = { idx: sel.index == null ? "—" : sel.index, band: sel.band || "", weak: (sel.weak || []).map((d) => DOMAIN_LABEL[d])[0] || "umumiy odatlar", bought: sel.bought, flagged: sel.flagged, tg: sel.tg, optout: false };
+    const sch = schedule("A", new Date(sel.t), ctx);
+    panel = `<div class="card stack"><h3>${esc(sel.name)} · oqim A (xarid qilmaganlar)</h3><p class="small muted">Bayroqlar: ${sel.flags.length ? sel.flags.map((f) => esc(FLAG_LABEL[f])).join("; ") : "yo'q"} · Kanal: ${sel.tg ? "Telegram" : "SMS (Telegram ulanmagan)"} · Birinchi: ${esc(srcLabel(sel.first))}, oxirgi: ${esc(srcLabel(sel.last))}</p>
+    <div class="tbl"><table><thead><tr><th>Kun</th><th>Vaqt</th><th>Kanal</th><th>Xabar</th><th>Holat</th></tr></thead><tbody>${sch.map((s) => `<tr><td>+${s.d}</td><td>${fmtT(s.when.getTime())}</td><td>${s.channel}</td><td>${esc(s.text)}</td><td><span class="pill">${esc(s.status)}</span></td></tr>`).join("")}</tbody></table></div></div>`;
+  }
+  return `<div class="stack"><div class="tbl"><table><thead><tr><th>ID</th><th>Vaqt</th><th>Ism</th><th>Test</th><th>Indeks</th><th>Bayroq</th><th>Daraja</th><th>Manba (birinchi → oxirgi)</th><th>Status</th></tr></thead><tbody>
+  ${rows.map((l) => `<tr class="${S.selLead === l.id ? "pick" : ""}"><td><button class="chip" data-a="selLead" data-id="${l.id}">${l.id}</button>${l.sample ? ' <span class="pill sample">namuna</span>' : ""}${l.callback ? ' <span class="pill attention">qo\'ng\'iroq: ' + esc(l.cbTime || "") + "</span>" : ""}${l.sync === "netlify" ? ' <span class="pill high">Netlify ✓</span>' : ""}${l.sync === "server" ? ' <span class="pill high">Server ✓</span>' : ""}</td><td>${fmtT(l.t)}</td><td>${esc(l.name)}<br><span class="muted small">${S.showPh && l.p9 ? esc(fmtPhone(l.p9)) : esc(l.phone)}</span></td><td>${l.scenario ? SC_LABEL[l.scenario] : "—"}</td><td>${l.index == null ? "—" : `<span class="pill ${l.band}">${l.index}</span>`}</td><td>${l.flags.length ? `<span class="pill consult">${l.flags.length}</span>` : "—"}</td><td>${l.grade}</td><td class="small">${esc(srcLabel(l.first))} → ${esc(srcLabel(l.last))}</td><td>${selHtml(LEAD_STATUS, l.status, `data-ch="leadStatus" data-id="${l.id}" aria-label="Status ${l.id}"`)}</td></tr>`).join("")}</tbody></table></div>${panel}<div class="row"><button class="btn btn-sm" data-a="togglePh">${S.showPh ? "Raqamlarni yashirish" : "Raqamlarni ko'rsatish"}</button><span class="muted small">Standart: PII maskalangan (rol: marketolog). Lid qatorini bosib, avtomatik xabarlar jadvalini ko'ring.</span></div></div>`;
+}
+function adminOrders() {
+  const rows = [...DB.orders].sort((a, b) => b.t - a.t);
+  return `<div class="stack"><div class="tbl"><table><thead><tr><th>Raqam</th><th>Vaqt</th><th>Mijoz</th><th>Hudud</th><th class="n">Qadoq</th><th class="n">Jami</th><th>To'lov</th><th>Manba</th><th>Status</th></tr></thead><tbody>
+  ${rows.map((o) => `<tr><td>${o.id}${o.sample ? ' <span class="pill sample">namuna</span>' : ""}</td><td>${fmtT(o.t)}</td><td>${esc(o.name)}</td><td>${esc(o.region)}<br><span class="muted small">${esc(o.district)}</span></td><td class="n">${o.qty}</td><td class="n">${fmtSum(o.total)}</td><td>${PAY_LABEL[o.pay]}</td><td class="small">${esc(srcLabel(o.last))}</td><td>${selHtml(ORDER_STATUS, o.status, `data-ch="orderStatus" data-id="${o.id}" aria-label="Status ${o.id}"`)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function adminHandoff() {
+  if (!DB.handoffs.length) return `<div class="card"><p class="muted">Hozircha handoff yo'q. AI bo'limida «Menejer bilan gaplashmoqchiman» yoki «Qorin og'rig'im bor» deb yozing.</p></div>`;
+  return `<div class="stack">${[...DB.handoffs].reverse().map((h) => `<div class="card stack"><div class="row" style="justify-content:space-between"><b>${h.id} · ${h.reason}</b><span class="row"><span class="pill ${h.priority === "urgent" || h.priority === "high" ? "consult" : ""}">${h.priority}</span><span class="pill">${h.status}</span></span></div>
+  <p class="small">${esc(h.summary)}</p>${h.status !== "resolved" ? `<div class="row" style="flex-wrap:nowrap"><input type="text" id="hr_${h.id}" placeholder="Menejer javobi" aria-label="Menejer javobi ${h.id}"><button class="btn btn-sm btn-primary" data-a="agentReply" data-id="${h.id}">Javob yuborish</button><button class="btn btn-sm" data-a="closeHo" data-id="${h.id}">Yopish</button></div>` : ""}</div>`).join("")}</div>`;
+}
+function adminKB() {
+  return `<div class="stack"><div class="tbl"><table><thead><tr><th>Hujjat</th><th>Tur</th><th>Matn</th><th>Holat</th></tr></thead><tbody>${DB.kb.map((k) => `<tr><td><b>${esc(k.title)}</b><br><span class="muted small">${k.id}</span></td><td>${k.type}</td><td class="small" style="min-width:260px">${esc(k.text)}</td><td>${selHtml(["draft", "in_review", "published", "archived"], k.status, `data-ch="kbStatus" data-id="${k.id}" aria-label="Holat ${k.id}"`)}</td></tr>`).join("")}</tbody></table></div>
+  <form id="kbForm" class="card stack" novalidate><h3>Yangi hujjat qo'shish</h3><div class="grid g2"><label class="f" for="k_title">Sarlavha<input type="text" id="k_title"></label><label class="f" for="k_type">Tur<select id="k_type"><option>faq</option><option>product_fact</option><option>usage</option><option>contraindication</option><option>policy</option><option>education</option></select></label></div>
+  <label class="f" for="k_kw">Kalit so'zlar<input type="text" id="k_kw" placeholder="vergul yoki bo'shliq bilan"></label><label class="f" for="k_text">Matn<textarea id="k_text"></textarea></label>
+  ${S.kbMsg ? `<div class="notice ${S.kbMsg.ok ? "ok" : "crit"} small">${S.kbMsg.t}</div>` : ""}
+  <button class="btn btn-primary" type="submit" style="align-self:flex-start">Qoralama sifatida saqlash</button><p class="muted small">Chiqish validatori taqiqlangan da'volarni («davolaydi», «kafolat», «100%» va h.k.) saqlash va nashr paytida ham tekshiradi. Faqat <b>published</b> hujjatlar AI ga ko'rinadi.</p></form></div>`;
+}
+function adminFlows() {
+  const t = (arr) => `<div class="tbl"><table><thead><tr><th>Kun</th><th>Xabar</th><th>CTA</th></tr></thead><tbody>${arr.map((s) => `<tr><td>+${s.d}</td><td>${esc(s.t)}</td><td>${esc(s.cta)}</td></tr>`).join("")}</tbody></table></div>`;
+  return `<div class="stack"><div class="card stack"><h3>Qoidalar</h3><ul class="small" style="margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:4px"><li>Kanal: Telegram, ulanmagan bo'lsa SMS.</li><li>Faqat marketing roziligi bor kontaktlarga; har xabarda to'xtatish.</li><li>Jimlik oynasi 09:00–21:00 (Toshkent), kuniga ≤ 1, haftasiga ≤ 3 xabar.</li><li>Xarid bo'lsa oqim A to'xtaydi; qizil bayroqli lidga savdo xabarlari ta'limiy xabarga almashadi.</li></ul></div>
+  <h3>Oqim A: xarid qilmaganlar (test tugatilgandan)</h3>${t(FLOW_A)}<h3>Oqim B: xariddan keyin (yetkazilgandan)</h3>${t(FLOW_B)}</div>`;
+}
+function adminPrice() {
+  return `<div class="stack"><form id="priceForm" class="card stack" novalidate><h3>Narxlar (so'm)</h3><div class="grid g3">${[1, 2, 3].map((q) => `<label class="f" for="p_${q}">${q} qadoq<input type="number" id="p_${q}" min="1000" step="1000" value="${DB.prices[q]}"></label>`).join("")}</div>
+  ${S.priceMsg ? `<div class="notice ${S.priceMsg.ok ? "ok" : "crit"} small">${S.priceMsg.t}</div>` : ""}<button class="btn btn-primary" type="submit" style="align-self:flex-start">Saqlash</button><p class="muted small">Yangi narx buyurtma sahifasida darhol ko'rinadi. O'zgarishlar tarixda saqlanadi.</p></form>
+  ${DB.priceHistory.length ? `<div class="tbl"><table><thead><tr><th>Vaqt</th><th>Qadoq</th><th class="n">Eski</th><th class="n">Yangi</th></tr></thead><tbody>${[...DB.priceHistory].reverse().map((h) => `<tr><td>${fmtT(h.t)}</td><td>${h.q}</td><td class="n">${fmtSum(h.from)}</td><td class="n">${fmtSum(h.to)}</td></tr>`).join("")}</tbody></table></div>` : ""}</div>`;
+}
+function adminEvents() {
+  const ev = [...DB.events].reverse().slice(0, 40);
+  return `<div class="stack"><div class="tbl"><table><thead><tr><th>Vaqt</th><th>Hodisa</th><th>Birinchi aloqa</th><th>Oxirgi aloqa</th><th>Parametrlar</th></tr></thead><tbody>${ev.length ? ev.map((e) => `<tr><td>${fmtT(e.t)}</td><td><code>${e.name}</code></td><td>${esc(e.first)}</td><td>${esc(e.src)}</td><td class="small">${esc(JSON.stringify(e.p))}</td></tr>`).join("") : `<tr><td colspan="5" class="muted">Hodisalar yo'q: saytda biror harakat qiling.</td></tr>`}</tbody></table></div>
+  <button class="btn" data-a="reset" style="align-self:flex-start">Demo ma'lumotlarini boshlang'ich holatga qaytarish</button></div>`;
+}
+function viewAdmin() {
+  const tabs = [["dash", "Dashboard"], ["leads", "Lidlar"], ["orders", "Buyurtmalar"], ["handoff", "Handoff"], ["kb", "Bilim bazasi"], ["flows", "Avtomatlashtirish"], ["price", "Narx"], ["events", "Hodisalar"]];
+  const body = { dash: adminDash, leads: adminLeads, orders: adminOrders, handoff: adminHandoff, kb: adminKB, flows: adminFlows, price: adminPrice, events: adminEvents }[S.adminTab]();
+  return `<section class="stack" style="padding-top:24px;padding-bottom:24px"><div class="row" style="justify-content:space-between"><h2>Admin panel</h2><span class="pill sample">demo: kirish himoyasi o'chirilgan</span></div>
+  <nav class="nav" style="flex:none;border-bottom:1px solid var(--line);padding-bottom:6px" aria-label="Admin bo'limlari">${tabs.map(([k, l]) => `<button class="tab" data-a="adminTab" data-v="${k}" ${S.adminTab === k ? 'aria-current="true"' : ""}>${l}</button>`).join("")}</nav>${body}</section>`;
+}
+
+const VIEWS = { contact: viewContact, home: viewHome, quiz: viewQuiz, result: viewResult, ai: viewAI, order: viewOrder, done: viewDone, admin: viewAdmin };
+function render() {
+  $("#app").innerHTML = header() + `<main class="wrap">${VIEWS[S.view]()}</main>`;
+  document.body.classList.toggle("has-sticky", S.view === "home");
+  if (S.view === "order") { fillDistricts(); $("#sumBox").innerHTML = sumHtml(); syncPacks(); }
+  if (S.view === "ai") { const b = $("#chatBox"); if (b) b.scrollTop = b.scrollHeight; }
+}
+function syncPacks() { document.querySelectorAll(".pack").forEach((l) => { const i = l.querySelector("input"); l.classList.toggle("on", !!(i && i.checked)); }); }
+function go(v) { if (v !== S.view) pushView(v); S.view = v; track("page_view", { view: v }); if (v === "order" && !S.coTracked) { S.coTracked = true; track("checkout_start"); } render(); window.scrollTo(0, 0); }
+
+/* ---------- harakatlar ---------- */
+function startQuiz(sc) {
+  S.quiz = { sc: sc || null, answers: sc ? { Q1: sc } : {}, i: sc ? 1 : 0, started: !!sc };
+  if (sc) track("quiz_start", { scenario: sc });
+  if (S.view !== "quiz") pushView("quiz");
+  S.view = "quiz"; render(); window.scrollTo(0, 0);
+}
+function answerQ(oid) {
+  const q = curQ();
+  if (q.code === "Q1") {
+    if (S.quiz.sc !== oid) S.quiz.answers = {};
+    S.quiz.sc = oid;
+    if (!S.quiz.started) { S.quiz.started = true; track("quiz_start", { scenario: oid }); }
+  }
+  S.quiz.answers[q.code] = oid;
+  S.quiz.i++;
+  if (S.quiz.i >= 15) return finishQuiz();
+  render();
+}
+function finishQuiz() {
+  const sc = S.quiz.sc;
+  if (!isComplete(sc, S.quiz.answers)) { S.quiz.i = Math.max(0, flowCodes(sc).findIndex((c) => !S.quiz.answers[c])); render(); return; }
+  S.result = computeResult(sc, S.quiz.answers);
+  S.lead = null;
+  track("quiz_finish", { index: S.result.index, band: S.result.band, flags: S.result.flags.length });
+  pushView("result"); S.view = "result"; render(); window.scrollTo(0, 0);
+}
+function netlifySend(kind, f, rec) {
+  if (!CONFIG.ntl || typeof fetch !== "function" || !/^https?:/.test(location.protocol)) return;
+  const u = S.touch, data = Object.assign({ "form-name": "leads", "bot-field": "", kind, source: srcLabel(u), utm_source: u.utm_source || "", utm_medium: u.utm_medium || "", utm_campaign: u.utm_campaign || "", utm_content: u.utm_content || "", first_source: srcLabel(S.first) }, f);
+  const body = new URLSearchParams(); Object.keys(data).forEach((k) => body.append(k, data[k] == null ? "" : String(data[k])));
+  try {
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() })
+      .then((r) => { if (rec) { rec.sync = r.ok ? "netlify" : "local"; save(); } })
+      .catch(() => { if (rec) { rec.sync = "local"; save(); } });
+  } catch (e) { if (rec) rec.sync = "local"; }
+}
+function deliver(kind, f, rec) {
+  const live = CONFIG.api && typeof fetch === "function" && /^https?:/.test(location.protocol);
+  if (!live) return netlifySend(kind, f, rec);
+  const u = S.touch;
+  const payload = Object.assign({ kind, source: srcLabel(u), utm_source: u.utm_source || "", utm_medium: u.utm_medium || "", utm_campaign: u.utm_campaign || "", utm_content: u.utm_content || "", first_source: srcLabel(S.first), token: (rec && rec.token) || "", bot_field: "" }, f);
+  try {
+    fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then((r) => { if (r.ok) { if (rec) { rec.sync = "server"; save(); } } else netlifySend(kind, f, rec); })
+      .catch(() => netlifySend(kind, f, rec));
+  } catch (e) { netlifySend(kind, f, rec); }
+}
+function chatNote() { return S.chat.filter((m) => m.role === "user" || m.role === "ai").slice(-4).map((m) => (m.role === "user" ? "Mijoz: " : "AI: ") + m.text.slice(0, 200)).join("\n"); }
+function submitCallback(ev) {
+  ev.preventDefault();
+  if ($("#cb_hp").value) return; // bot tuzog'i
+  const phone = $("#cb_phone").value, consent = $("#cb_consent").checked;
+  $("#e_cb_phone").textContent = validPhone(phone) ? "" : "Telefon raqamini to'liq kiriting (9 raqam)";
+  $("#e_cb_consent").textContent = consent ? "" : "Davom etish uchun rozilik kerak";
+  if (!validPhone(phone) || !consent) return;
+  const p = phoneLocal(phone), time = $("#cb_time").value, name = $("#cb_name").value.trim();
+  const r = S.result;
+  let lead = DB.leads.find((l) => l.p9 === p);
+  if (lead) { lead.callback = true; lead.cbTime = time; if (lead.status === "lost") lead.status = "new"; if (name && /kiritilmagan/.test(lead.name)) lead.name = name; }
+  else {
+    lead = { id: "L" + ++DB.seq.lead, name: name || (S.tg && S.tg.name) || "Ism kiritilmagan", phone: "+998 (" + p.slice(0, 2) + ") " + p.slice(2, 5) + "-••-••", p9: p, scenario: r ? r.scenario : null, index: r ? r.index : null, band: r ? r.band : null, flags: r ? r.flags : [], weak: r ? r.weak : [], grade: r ? leadGrade(r, true) : "B", first: S.first, last: S.touch, status: "new", tg: !!S.tg, bought: false, flagged: !!(r && r.flags.length), t: Date.now(), sample: false, callback: true, cbTime: time, token: Math.random().toString(36).slice(2, 12) };
+    DB.leads.push(lead); track("lead_created", { channel: "callback" });
+  }
+  track("callback_request", { time });
+  S.lead = lead; S.cbDone = { time, work: workHours(new Date()) };
+  deliver("callback", { name: lead.name, phone: fmtPhone(p), time, scenario: r ? r.scenario : "", index: r ? r.index : "", band: r ? r.band : "", flags: r ? r.flags.join(",") : "", grade: lead.grade, note: S.chatState === "handed" ? chatNote() : "", consent: "yes" }, lead);
+  save(); render();
+}
+function showView(v) {
+  const okV = { home: 1, ai: 1, order: 1, admin: 1, contact: 1, result: !!S.result, done: !!S.orderDone, quiz: S.quiz.i < 15 };
+  S.view = okV[v] ? v : "home"; render(); window.scrollTo(0, 0);
+}
+window.addEventListener("popstate", (e) => showView(e.state && e.state.mf ? e.state.mf : "home"));
+try { history.replaceState({ mf: "home" }, ""); } catch (e) { /* tarix yopiq */ }
+function initTg() {
+  try {
+    const w = window.Telegram && window.Telegram.WebApp;
+    if (!w || !w.initData) return;
+    w.ready(); w.expand();
+    const u = w.initDataUnsafe && w.initDataUnsafe.user;
+    if (u) S.tg = { id: u.id, name: u.first_name || "" };
+    if (S.view === "home") render();
+  } catch (e) { /* Mini App emas */ }
+}
+try {
+  if (/Telegram/i.test(UA) || /tgWebApp/.test(location.hash)) {
+    const sc = document.createElement("script"); sc.src = "https://telegram.org/js/telegram-web-app.js"; sc.onload = initTg; sc.onerror = function () {};
+    document.head.appendChild(sc);
+  }
+} catch (e) { /* ignore */ }
+function submitLead(ev) {
+  ev.preventDefault();
+  const phone = $("#l_phone").value, consent = $("#l_consent").checked;
+  $("#e_l_phone").textContent = validPhone(phone) ? "" : "Telefon raqamini to'liq kiriting (9 raqam)";
+  $("#e_l_consent").textContent = consent ? "" : "Davom etish uchun rozilik kerak";
+  if (!validPhone(phone) || !consent) return;
+  const r = S.result;
+  const lead = { id: "L" + ++DB.seq.lead, name: $("#l_name").value.trim() || "Ism kiritilmagan", phone: "", scenario: r.scenario, index: r.index, band: r.band, flags: r.flags, weak: r.weak, grade: leadGrade(r, true), first: S.first, last: S.touch, status: r.flags.length ? "new" : "quiz_done", tg: false, bought: false, flagged: r.flags.length > 0, t: Date.now(), sample: false, mkt: $("#l_mkt").checked, token: Math.random().toString(36).slice(2, 12) };
+  const p = phoneLocal(phone); lead.phone = "+998 (" + p.slice(0, 2) + ") " + p.slice(2, 5) + "-••-••";
+  lead.p9 = p;
+  DB.leads.push(lead); S.lead = lead; track("lead_created", { grade: lead.grade, channel: r.channel });
+  deliver("quiz", { name: lead.name, phone: fmtPhone(p), scenario: r.scenario, index: r.index, band: r.band, flags: r.flags.join(","), grade: lead.grade, marketing: lead.mkt ? "yes" : "no", consent: "yes" }, lead);
+  save(); render();
+}
+function addHandoff(code, priority) {
+  const r = S.result;
+  const last = [...S.chat].reverse().find((m) => m.role === "user");
+  const h = { id: "H" + ++DB.seq.ho, reason: code, priority, status: "open", t: Date.now(),
+    summary: `${r ? `Test: ${SC_LABEL[r.scenario]}, indeks ${r.index} (${BAND_LABEL[r.band]}), bayroqlar: ${r.flags.length ? r.flags.join(", ") : "yo'q"}. ` : "Test o'tilmagan. "}Manba: ${srcLabel(S.touch)}. Oxirgi savol: «${last ? last.text : "—"}».` };
+  DB.handoffs.push(h); S.chatState = "handed"; track("ai_handoff", { reason: code });
+  const open = workHours(new Date());
+  S.chat.push({ role: "sys", text: open ? "Suhbat menejerga uzatildi. Menejer ish vaqtida (09:00–21:00) javob beradi." : "Hozir ish vaqtidan tashqari. Menejer ertaga 09:00 dan keyin bog'lanadi; ma'lumotlaringiz saqlandi." });
+  save();
+}
+let chatBusy = false;
+function sendChat(text) {
+  text = String(text || "").trim().slice(0, 300);
+  if (!text || chatBusy) return;
+  S.chat.push({ role: "user", text }); track("ai_message");
+  if (S.chatState === "handed") { S.chat.push({ role: "sys", text: "Suhbat menejerga uzatilgan. Menejer javobini kuting (Admin → Handoff orqali javob yuborib ko'ring)." }); render(); return; }
+  const live = CONFIG.api && typeof fetch === "function" && /^https?:/.test(location.protocol);
+  if (!live) return finishChat(answer(text, DB.kb));
+  const hist = S.chat.filter((m) => (m.role === "user" || m.role === "ai") && !m.greet).slice(-7, -1).map((m) => ({ role: m.role === "ai" ? "assistant" : "user", content: m.text }));
+  chatBusy = true; S.chat.push({ role: "sys", text: "Javob tayyorlanmoqda...", pending: true }); render();
+  let p;
+  try {
+    p = fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text, history: hist, context: S.result ? { index: S.result.index, band: S.result.band } : undefined }) })
+      .then((r) => { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+      .then((r) => { if (!r || !r.ok || typeof r.text !== "string") throw new Error("bad"); r.hits = (r.hits || []).map((h) => ({ doc: { id: h.id, title: h.title }, score: h.score })); return r; });
+  } catch (e) { p = Promise.reject(e); }
+  p.catch(() => Object.assign(answer(text, DB.kb), { via: "demo-zaxira" }))
+    .then((r) => { chatBusy = false; S.chat = S.chat.filter((m) => !m.pending); finishChat(r); });
+}
+function finishChat(r) {
+  S.trace = r;
+  const auto = r.handoff && (r.handoff.code === "URGENT" || r.handoff.code === "USER_ASK");
+  S.chat.push({ role: "ai", text: r.text, sources: r.sources, offer: r.handoff && !auto ? r.handoff : null });
+  if (auto) addHandoff(r.handoff.code, r.handoff.priority);
+  render(); const i = $("#chatIn"); if (i) i.focus();
+}
+function fillDistricts() {
+  const r = REGIONS.find((x) => x.id === $("#f_region").value);
+  $("#f_district").innerHTML = r ? `<option value="">Tanlang</option>` + r.d.map((d) => `<option>${esc(d)}</option>`).join("") : `<option value="">Avval viloyatni tanlang</option>`;
+}
+function submitOrder(ev) {
+  ev.preventDefault();
+  const f = { name: $("#f_name").value, phone: $("#f_phone").value, region: $("#f_region").value, district: $("#f_district").value, address: $("#f_addr").value, adult: $("#f_adult").checked, consent: $("#f_consent").checked };
+  const e = validateOrder(f);
+  for (const k of ["name", "phone", "region", "district", "address", "adult", "consent"]) { const el = $("#e_" + k); if (el) el.textContent = e[k] || ""; }
+  if (Object.keys(e).length) { const first = $(".err:not(:empty)"); if (first) first.scrollIntoView({ block: "center" }); return; }
+  const qty = Number($('input[name="qty"]:checked').value), pay = $('input[name="pay"]:checked').value;
+  const reg = REGIONS.find((x) => x.id === f.region);
+  const c = calcOrder(DB.prices[qty], 1, $("#f_promo").value, reg.z);
+  let lead = S.lead;
+  const p = phoneLocal(f.phone);
+  if (!lead) { lead = { id: "L" + ++DB.seq.lead, name: f.name.trim(), phone: "+998 (" + p.slice(0, 2) + ") " + p.slice(2, 5) + "-••-••", scenario: null, index: null, band: null, flags: [], weak: [], grade: "B", first: S.first, last: S.touch, status: "ordered", tg: false, bought: true, flagged: false, t: Date.now(), sample: false, p9: p }; DB.leads.push(lead); track("lead_created", { channel: "order_form" }); }
+  lead.bought = true; lead.status = "ordered";
+  const o = { id: "MF-" + ++DB.seq.order, lead: lead.id, name: f.name.trim(), qty, total: c.total, region: reg.n, district: f.district, pay, status: pay === "cod" ? "placed" : "pending_payment", last: S.touch, t: Date.now(), sample: false };
+  deliver("order", { name: f.name.trim(), phone: fmtPhone(p), region: reg.n, district: f.district, address: f.address.trim(), qty, total: c.total, pay, promo: $("#f_promo").value.trim(), order_id: o.id, consent: "yes" }, o);
+  DB.orders.push(o); S.orderDone = o; if (pay === "cod") track("purchase", { value: o.total });
+  S.coTracked = false; save(); pushView("done"); S.view = "done"; render(); window.scrollTo(0, 0);
+}
+
+const A = {
+  nav: (d) => { if (d.v === "quiz") return startQuiz(S.quiz.i > 0 && S.quiz.i < 15 ? S.quiz.sc : null); go(d.v); },
+  startQuiz: (d) => startQuiz(d.sc),
+  ans: (d) => answerQ(d.o),
+  back: () => { if (S.quiz.i <= 0) go("home"); else { S.quiz.i--; render(); } },
+  chip: (d) => sendChat(d.q),
+  handoff: (d) => { addHandoff(d.code, d.pr); const m = S.chat[Number(d.i)]; if (m) m.offer = null; render(); },
+  bindTg: () => { if (S.lead) { S.lead.tg = true; save(); render(); } },
+  pay: () => { const o = S.orderDone; if (o && o.status === "pending_payment") { o.status = "paid"; track("purchase", { value: o.total }); const l = DB.leads.find((x) => x.id === o.lead); if (l) l.status = "paid"; save(); render(); } },
+  togglePh: () => { S.showPh = !S.showPh; render(); },
+  adminTab: (d) => { S.adminTab = d.v; render(); },
+  selLead: (d) => { S.selLead = S.selLead === d.id ? null : d.id; render(); },
+  agentReply: (d) => { const el = $("#hr_" + d.id); const t = el && el.value.trim(); if (!t) return; S.chat.push({ role: "agent", text: "Menejer: " + t }); const h = DB.handoffs.find((x) => x.id === d.id); if (h) h.status = "taken"; save(); render(); },
+  closeHo: (d) => { const h = DB.handoffs.find((x) => x.id === d.id); if (h) h.status = "resolved"; if (!DB.handoffs.some((x) => x.status === "open" || x.status === "taken")) S.chatState = "ai"; save(); render(); },
+  reset: () => { DB = seedDB(); S.chat = S.chat.slice(0, 1); S.chatState = "ai"; S.trace = null; S.lead = null; S.orderDone = null; S.selLead = null; save(); render(); },
+};
+document.addEventListener("click", (e) => { const el = e.target.closest("[data-a]"); if (el && A[el.dataset.a]) A[el.dataset.a](el.dataset); });
+document.addEventListener("submit", (e) => {
+  const id = e.target.id;
+  if (id === "leadForm") submitLead(e);
+  else if (id === "cbForm") submitCallback(e);
+  else if (id === "orderForm") submitOrder(e);
+  else if (id === "chatForm") { e.preventDefault(); const i = $("#chatIn"); const v = i.value; i.value = ""; sendChat(v); }
+  else if (id === "kbForm") {
+    e.preventDefault();
+    const title = $("#k_title").value.trim(), text = $("#k_text").value.trim();
+    if (!title || text.length < 10) { S.kbMsg = { ok: false, t: "Sarlavha va kamida 10 belgilik matn kerak." }; return render(); }
+    const bad = validateClaim(text);
+    if (bad.length) { S.kbMsg = { ok: false, t: "Saqlanmadi: matnda taqiqlangan da'vo bor (" + esc(bad.join(", ")) + "). Matnni tibbiy jihatdan neytral qilib qayta yozing." }; return render(); }
+    DB.kb.push({ id: "kb" + (DB.kb.length + 1), title, type: $("#k_type").value, status: "draft", keywords: $("#k_kw").value, text });
+    S.kbMsg = { ok: true, t: "Qoralama saqlandi. Nashr qilish uchun holatini published ga o'tkazing." }; save(); render();
+  } else if (id === "priceForm") {
+    e.preventDefault();
+    const np = {}; let okAll = true;
+    for (const q of [1, 2, 3]) { const v = Number($("#p_" + q).value); if (!(v >= 1000)) okAll = false; np[q] = v; }
+    if (!okAll) { S.priceMsg = { ok: false, t: "Narx kamida 1 000 so'm bo'lishi kerak." }; return render(); }
+    for (const q of [1, 2, 3]) if (np[q] !== DB.prices[q]) { DB.priceHistory.push({ t: Date.now(), q, from: DB.prices[q], to: np[q] }); DB.prices[q] = np[q]; }
+    S.priceMsg = { ok: true, t: "Narxlar saqlandi." }; save(); render();
+  }
+});
+document.addEventListener("change", (e) => {
+  const t = e.target, ch = t.dataset.ch;
+  if (!ch) { if (t.name === "qty") S.qty = Number(t.value); if (t.name === "qty" || t.name === "pay") { syncPacks(); const s = $("#sumBox"); if (s) s.innerHTML = sumHtml(); } return; }
+  if (ch === "src") { S.src = t.value; S.touch = SOURCES[t.value].utm; track("page_view", { view: S.view, touch: "new" }); render(); }
+  else if (ch === "region") { fillDistricts(); $("#sumBox").innerHTML = sumHtml(); }
+  else if (ch === "sum") $("#sumBox").innerHTML = sumHtml();
+  else if (ch === "leadStatus") { const l = DB.leads.find((x) => x.id === t.dataset.id); if (l) { l.status = t.value; save(); } }
+  else if (ch === "orderStatus") { const o = DB.orders.find((x) => x.id === t.dataset.id); if (o) { const was = o.status; o.status = t.value; if (!o.sample && was === "pending_payment" && t.value === "paid") track("purchase", { value: o.total }); save(); } }
+  else if (ch === "kbStatus") {
+    const k = DB.kb.find((x) => x.id === t.dataset.id);
+    if (k) { if (t.value === "published" && validateClaim(k.text).length) { S.kbMsg = { ok: false, t: "Nashr rad etildi: matnda taqiqlangan da'vo bor." }; render(); return; } k.status = t.value; save(); }
+  }
+});
+document.addEventListener("input", (e) => {
+  const t = e.target;
+  if (t.id === "f_phone" || t.id === "l_phone" || t.id === "cb_phone") {
+    let d = phoneLocal(t.value);
+    if (e.inputType && e.inputType.startsWith("delete") && d === (t.dataset.pd || "") && d.length) d = d.slice(0, -1);
+    t.dataset.pd = d; t.value = d ? fmtPhone(d) : "";
+  }
+  if (t.dataset.in === "sum") { const s = $("#sumBox"); if (s) s.innerHTML = sumHtml(); }
+});
+track("page_view", { view: "home" });
+render();
+/* ===== UI END ===== */
+</script>
+</body></html>
